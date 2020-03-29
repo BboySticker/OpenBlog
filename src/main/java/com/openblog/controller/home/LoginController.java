@@ -1,0 +1,97 @@
+package com.openblog.controller.home;
+
+import com.openblog.entity.User;
+import com.openblog.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.openblog.util.MyUtils.getIpAddr;
+
+@Controller
+public class LoginController {
+
+    @Autowired
+    private UserService userService;
+
+    private Logger logger = LogManager.getLogger(LoginController.class);
+
+    @RequestMapping("/login")
+    private String login() {
+        return "Access/login";
+    }
+
+    @GetMapping("/forgot")
+    private String forgot() {
+        return "Access/forgot";
+    }
+
+    @GetMapping("/register")
+    private String register() {
+        return "Access/register";
+    }
+
+    @PostMapping("/loginVerify")
+    @ResponseBody
+    private String loginVerify(HttpServletRequest request, HttpServletResponse response) {
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        String remember = request.getParameter("remember");
+        logger.info(email);
+        logger.info(password);
+        logger.info(remember);
+        User user = userService.getUserByUsernameOrEmail(email);
+        if (user == null) {
+            map.put("code", 0);
+            map.put("msg", "Invalid User!");
+            logger.warn("Invalid User!");
+        } else if (!user.getUserPass().equals(password)) {
+            map.put("code", 0);
+            map.put("msg", "Password");
+            logger.warn("Wrong Password!");
+        } else {
+            // login successful
+            map.put("code",1);
+            map.put("msg","");
+            // add to session
+            request.getSession().setAttribute("user", user);
+            // add cookie
+            if(remember != null) {
+                // create two Cookie objs
+                Cookie nameCookie = new Cookie("email", email);
+                // set the age of Cookies to 3 days
+                nameCookie.setMaxAge(60 * 60 * 24 * 3);
+                Cookie pwdCookie = new Cookie("password", password);
+                pwdCookie.setMaxAge(60 * 60 * 24 * 3);
+                response.addCookie(nameCookie);
+                response.addCookie(pwdCookie);
+            }
+            user.setUserLastLoginTime(new Date());
+            user.setUserLastLoginIp(getIpAddr(request));
+            userService.updateUser(user);
+        }
+        String result = new JSONObject(map).toString();
+        return result;
+    }
+
+    @GetMapping("/admin")
+    private String admin() {
+        return "Admin/admin";
+    }
+
+}
