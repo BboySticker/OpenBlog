@@ -5,5 +5,6 @@
 </head>
 <body>
     <h1>Here is admin page.</h1>
+    <a href="admin/logout">logout</a>
 </body>
 </html>
