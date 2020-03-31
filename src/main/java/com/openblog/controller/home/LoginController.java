@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,9 +16,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import static com.openblog.util.MyUtils.getIpAddr;
 
@@ -44,6 +49,43 @@ public class LoginController {
         return "Access/register";
     }
 
+    @PostMapping("/register")
+    @ResponseBody
+    private String registerPost(HttpServletRequest request, HttpServletResponse response) throws UnknownHostException {
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+
+        if (userService.getUserByEmail(email) != null) {
+            map.put("code", 0);
+            map.put("mgs", "Email has already been used!");
+        } else if (userService.getUserByName(name) != null) {
+            map.put("code", 0);
+            map.put("mgs", "Username has already been used!");
+        } else {
+            map.put("code", 1);
+            map.put("msg", "Successfully logged in");
+
+            User user = new User();
+            user.setUserId(UUID.randomUUID().toString());
+            user.setUserName(name);
+            user.setUserPass(password);
+            user.setUserEmail(email);
+            user.setUserUrl("/user/" + name);
+            user.setUserLastLoginIp(getIpAddr(request));
+            user.setUserRegisterTime(new Date());
+            user.setUserLastLoginTime(new Date());
+            user.setUserStatus(1);  // 0 - abnormal, 1 - normal
+
+            userService.addUser(user);
+            request.getSession().setAttribute("user", user);
+        }
+        String result = new JSONObject(map).toString();
+        return result;
+    }
+
     @PostMapping("/loginVerify")
     @ResponseBody
     private String loginVerify(HttpServletRequest request, HttpServletResponse response) {
@@ -52,10 +94,7 @@ public class LoginController {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String remember = request.getParameter("remember");
-        logger.info(email);
-        logger.info(password);
-        logger.info(remember);
-        User user = userService.getUserByUsernameOrEmail(email);
+        User user = userService.getUserByEmail(email);
         if (user == null) {
             map.put("code", 0);
             map.put("msg", "Invalid User!");
@@ -92,6 +131,13 @@ public class LoginController {
     @GetMapping("/admin")
     private String admin() {
         return "Admin/admin";
+    }
+
+    @GetMapping("/admin/logout")
+    private String logout(HttpSession session) {
+        session.removeAttribute("user");
+        session.invalidate();
+        return "redirect:/index";
     }
 
 }
