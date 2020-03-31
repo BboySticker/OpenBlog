@@ -26,9 +26,6 @@ public class User {
     @Column(name = "userPassword")
     private String userPass;
 
-    @Column(name = "userNickname")
-    private String userNickname;
-
     @Column(name = "userEmail")
     private String userEmail;
 

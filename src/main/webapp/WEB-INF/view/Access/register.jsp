@@ -94,7 +94,7 @@
                         <div class="card fat">
                             <div class="card-body">
                                 <h4 class="card-title">Register</h4>
-                                <form method="POST" class="my-login-validation" novalidate="">
+                                <form id="register-form" method="POST" class="my-login-validation" novalidate="">
                                     <div class="form-group">
                                         <label for="name">Name</label>
                                         <input id="name" type="text" class="form-control" name="name" required autofocus>
@@ -119,16 +119,6 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <div class="custom-checkbox custom-control">
-                                            <input type="checkbox" name="agree" id="agree" class="custom-control-input" required="">
-                                            <label for="agree" class="custom-control-label">I agree to the <a href="#">Terms and Conditions</a></label>
-                                            <div class="invalid-feedback">
-                                                You must agree with our Terms and Conditions
-                                            </div>
-                                        </div>
-                                    </div>
-
                                     <div class="form-group m-0">
                                         <button type="submit" class="btn btn-primary btn-block">
                                             Register
@@ -141,14 +131,15 @@
                             </div>
                         </div>
                         <div class="footer">
-                            Copyright &copy; 2017 &mdash; Your Company
+                            <%@ include file="../Home/Public/footer-2.jsp" %>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <script src="js/my-login.js"></script>
         <script type="text/javascript">
@@ -210,12 +201,33 @@
                 });
 
                 $(".my-login-validation").submit(function() {
-                    var form = $(this);
-                    if (form[0].checkValidity() === false) {
-                        event.preventDefault();
-                        event.stopPropagation();
+                    var name = $("#name").val();
+                    var user = $("#email").val();
+                    var password = $("#password").val();
+                    if (name=="") {
+                        alert("Username cannot be empty!");
+                    } else if(user=="") {
+                        alert("Email cannot be empty!");
+                    } else if(password=="") {
+                        alert("Password cannot be empty!");
+                    } else {
+                        $.ajax({
+                            type: "POST",
+                            url: 'register',
+                            data: $("#register-form").serialize(),
+                            success: function(resp) {
+                                alert(code);
+                                if(resp.code == 0) {
+                                    alert(resp.msg);
+                                } else {
+                                    window.location.href = "index";
+                                }
+                            },
+                            error: function() {
+                                alert("Failed to retrieve data")
+                            }
+                        })
                     }
-                    form.addClass('was-validated');
                 });
             });
         </script>

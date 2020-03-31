@@ -3,7 +3,6 @@ package com.openblog.configuration;
 import com.zaxxer.hikari.HikariDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -44,6 +43,7 @@ public class HibernateConfiguration {
         Properties props = new Properties();
         props.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
         props.setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
+        props.setProperty("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
         return props;
     }
 
@@ -52,6 +52,7 @@ public class HibernateConfiguration {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
         sessionFactory.setPackagesToScan(env.getProperty("hibernate.packagesToScan"));
+
         sessionFactory.setHibernateProperties(getHibernateProperties());
         return sessionFactory;
     }

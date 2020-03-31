@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -160,7 +159,7 @@
 <body>
 <div class="container">
 
-    <jsp:include page="Public/header.jsp" /><!-- /.blog-header -->
+    <%@include file="header.jsp" %><!-- /.blog-header -->
 
     <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
         <div class="col-md-6 px-0">
@@ -274,13 +273,13 @@
             </nav>
         </div><!-- /.blog-main -->
 
-        <jsp:include page="Public/sidebar-1.jsp" /><!-- /.blog-sidebar -->
+        <%@include file="sidebar-1.jsp" %><!-- /.blog-sidebar -->
 
     </div><!-- /.row -->
 
 </main><!-- /.container -->
 
-<jsp:include page="Public/footer.jsp" /><!-- /.blog-footer -->
+<%@include file="footer-2.jsp" %><!-- /.blog-footer -->
 
 </body>
 </html>

@@ -33,13 +33,16 @@ public class UserDaoImpl implements UserDao {
 
     public User getUserByName(String username) {
         Session currentSession = sessionFactory.getCurrentSession();
-        Query query = currentSession.createQuery("from User where=:username");
+        Query query = currentSession.createQuery("from User where userName=:username");
         query.setParameter("username", username);
         return (User) query.uniqueResult();
     }
 
     public User getUserByEmail(String email) {
-        return null;
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query query = currentSession.createQuery("from User where userEmail=:email");
+        query.setParameter("email", email);
+        return (User) query.uniqueResult();
     }
 
     public void updateUser(User user) {
