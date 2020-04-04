@@ -133,6 +133,12 @@
             <artifactId>HikariCP</artifactId>
             <version>2.6.1</version>
         </dependency>
+        <!-- Add Email Support -->
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.2</version>
+        </dependency>
     </dependencies>
 
     <build>

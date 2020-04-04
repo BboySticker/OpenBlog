@@ -48,6 +48,9 @@ public class User {
     private Integer userStatus;
 
     @Transient
+    private String token;
+
+    @Transient
     private Integer articleCount;
 
 }

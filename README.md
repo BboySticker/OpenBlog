@@ -15,3 +15,8 @@ to become a user and start share their content on this platform.
 
 #### Design
 
+#### Build
+
+<ul>
+    Make your own EmailService inorder to send password reset email.
+</ul>
