@@ -41,7 +41,7 @@ $(function() {
         $this.on("keyup paste", function() {
             $("#passeye-"+i).val($(this).val());
         });
-        $("#passeye-toggle-"+i).on( "click", function() {
+        $("#passeye-toggle-"+i).on("click", function() {
             if($this.hasClass("show")) {
                 $this.attr('type', 'password');
                 $this.removeClass("show");
@@ -55,19 +55,22 @@ $(function() {
         });
     });
 
-    $("#login-btn").click(function() {
-        // var form = $(".my-login-validation");
-        var form = $("#login-form");
+    $("#register-btn").click(function() {
+        var form = $(".my-login-validation");
         if (form[0].checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
         }
         form.addClass('was-validated');
 
-        var email = $("#email").val();
+        var name = $("#name").val();
+        var user = $("#email").val();
         var password = $("#password").val();
-        alert(email);
-        if(email == "") {
+        if (name == "") {
+            alert("Username cannot be empty!");
+        } else if (name.indexOf(' ') !== -1) {
+            alert("Username cannot contain spaces!");
+        } else if(user == "") {
             alert("Email cannot be empty!");
         } else if(password == "") {
             alert("Password cannot be empty!");
@@ -75,14 +78,14 @@ $(function() {
             $.ajax({
                 async: false,
                 type: "POST",
-                url: 'loginVerify',
-                data: $("#login-form").serialize(),
+                url: 'registerVerify',
+                data: $("#register-form").serialize(),
                 dataType: "json",
-                success: function(resp) {
-                    if(resp.code == 0) {
-                        alert(resp.msg);
+                success: function(data) {
+                    if(data.code == 0) {
+                        alert(data.msg);
                     } else {
-                        window.location.href = "admin";
+                        window.location.href = "index";
                     }
                 },
                 error: function() {

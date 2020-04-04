@@ -2,12 +2,11 @@ package com.openblog.controller.home;
 
 import com.openblog.entity.User;
 import com.openblog.service.UserService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +16,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.HashMap;
@@ -32,7 +30,7 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    private Logger logger = LogManager.getLogger(LoginController.class);
+    private Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     @RequestMapping("/login")
     private String login() {
@@ -44,14 +42,14 @@ public class LoginController {
         return "Access/forgot";
     }
 
-    @GetMapping("/register")
+    @RequestMapping("/register")
     private String register() {
         return "Access/register";
     }
 
-    @PostMapping("/register")
+    @PostMapping("/registerVerify")
     @ResponseBody
-    private String registerPost(HttpServletRequest request, HttpServletResponse response) throws UnknownHostException {
+    private String registerVerify(HttpServletRequest request, HttpServletResponse response) throws UnknownHostException {
         Map<String, Object> map = new HashMap<String, Object>();
 
         String name = request.getParameter("name");
@@ -60,20 +58,20 @@ public class LoginController {
 
         if (userService.getUserByEmail(email) != null) {
             map.put("code", 0);
-            map.put("mgs", "Email has already been used!");
+            map.put("msg", "Email has already been used!");
         } else if (userService.getUserByName(name) != null) {
             map.put("code", 0);
-            map.put("mgs", "Username has already been used!");
+            map.put("msg", "Username has already been used!");
         } else {
             map.put("code", 1);
-            map.put("msg", "Successfully logged in");
+            map.put("msg", "Successfully registered!");
 
             User user = new User();
             user.setUserId(UUID.randomUUID().toString());
             user.setUserName(name);
             user.setUserPass(password);
             user.setUserEmail(email);
-            user.setUserUrl("/user/" + name);
+            user.setUserUrl("user/" + name);
             user.setUserLastLoginIp(getIpAddr(request));
             user.setUserRegisterTime(new Date());
             user.setUserLastLoginTime(new Date());
@@ -98,15 +96,13 @@ public class LoginController {
         if (user == null) {
             map.put("code", 0);
             map.put("msg", "Invalid User!");
-            logger.warn("Invalid User!");
         } else if (!user.getUserPass().equals(password)) {
             map.put("code", 0);
-            map.put("msg", "Password");
-            logger.warn("Wrong Password!");
+            map.put("msg", "Wrong Password!");
         } else {
             // login successful
-            map.put("code",1);
-            map.put("msg","");
+            map.put("code", 1);
+            map.put("msg", "Successfully logged in!");
             // add to session
             request.getSession().setAttribute("user", user);
             // add cookie
