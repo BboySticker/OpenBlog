@@ -22,14 +22,6 @@ public interface UserService {
     User getUserById(String id);
 
     /**
-     * Retrieve User by username or email
-     *
-     * @param str
-     * @return
-     */
-    User getUserByUsernameOrEmail(String str);
-
-    /**
      * Retrieve User by username
      *
      * @param username

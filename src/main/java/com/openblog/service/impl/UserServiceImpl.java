@@ -26,11 +26,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    public User getUserByUsernameOrEmail(String str) {
-        return userDao.getUserByUsernameOrEmail(str);
-    }
-
-    @Transactional
     public User getUserByName(String username) {
         return userDao.getUserByName(username);
     }
