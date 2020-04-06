@@ -47,7 +47,7 @@ public class User {
     @Column(name = "userStatus")
     private Integer userStatus;
 
-    @Transient
+    @Column(name = "token")
     private String token;
 
     @Transient
