@@ -15,6 +15,24 @@ to become a user and start share their content on this platform.
 
 #### Design
 
+There are two kinds of users for this application. One is Admin, the other is Normal User.
+<li>
+    For Admin, he can do following things:
+    <ul>Login, Logout</ul>
+    <ul>Add User Account</ul>
+    <ul>Delete User Account</ul>
+    <ul>Search for User Account</ul>
+    <ul>Delete Article</ul>
+    <ul>Search for Article</ul>
+</li>
+<li>
+    For Normal User:
+    <ul>Login, Logout</ul>
+    <ul>Manage his/her own Articles [Post, Delete, Edit]</ul>
+    <ul>Comment?</ul>
+    <ul>Like?</ul>
+</li>
+
 #### Build
 
 <ul>
