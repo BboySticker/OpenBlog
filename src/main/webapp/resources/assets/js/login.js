@@ -66,7 +66,6 @@ $(function() {
 
         var email = $("#email").val();
         var password = $("#password").val();
-        alert(email);
         if(email == "") {
             alert("Email cannot be empty!");
         } else if(password == "") {

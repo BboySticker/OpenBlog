@@ -93,6 +93,7 @@ public class LoginController {
         String password = request.getParameter("password");
         String remember = request.getParameter("remember");
         User user = userService.getUserByEmail(email);
+
         if (user == null) {
             map.put("code", 0);
             map.put("msg", "Invalid User!");

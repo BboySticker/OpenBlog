@@ -13,7 +13,7 @@
     <body class="my-login-page">
         <section class="h-100">
             <div class="container h-100">
-                <div class="row justify-content-md-center h-100">
+                <div class="row justify-content-md-center align-items-center h-100">
                     <div class="card-wrapper">
                         <div class="card fat">
                             <div class="card-body">
@@ -61,18 +61,18 @@
                                             <label for="remember" class="custom-control-label">Remember Me</label>
                                         </div>
                                     </div>
-
-                                    <div class="form-group m-0">
-                                        <%--<input type="submit" class="btn btn-primary btn-block" id="login-btn" value="Login"/>--%>
-                                        <button type="button" class="btn btn-primary btn-block" id="login-btn">
-                                            Login
-                                        </button>
-                                    </div>
-
-                                    <div class="mt-4 text-center">
-                                        Don't have an account? <a href="register">Create One</a>
-                                    </div>
                                 </form>
+
+                                <div class="form-group m-0">
+                                    <%--<input type="submit" class="btn btn-primary btn-block" id="login-btn" value="Login"/>--%>
+                                    <button type="button" class="btn btn-primary btn-block" id="login-btn">
+                                        Login
+                                    </button>
+                                </div>
+
+                                <div class="mt-4 text-center">
+                                    Don't have an account? <a href="register">Create One</a>
+                                </div>
                             </div>
                         </div>
                         <div class="footer">

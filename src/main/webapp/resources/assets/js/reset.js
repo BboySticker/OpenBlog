@@ -41,7 +41,7 @@ $(function() {
         $this.on("keyup paste", function() {
             $("#passeye-"+i).val($(this).val());
         });
-        $("#passeye-toggle-"+i).on( "click", function() {
+        $("#passeye-toggle-"+i).on("click", function() {
             if($this.hasClass("show")) {
                 $this.attr('type', 'password');
                 $this.removeClass("show");
@@ -55,9 +55,8 @@ $(function() {
         });
     });
 
-    $("#login-btn").click(function() {
-        // var form = $(".my-login-validation");
-        var form = $("#login-form");
+    $("#submit-btn").click(function() {
+        var form = $(".my-login-validation");
         if (form[0].checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
@@ -66,22 +65,27 @@ $(function() {
 
         var email = $("#email").val();
         var password = $("#password").val();
+        var confirmedPassword = $("#password-confirm").val();
         if(email == "") {
             alert("Email cannot be empty!");
         } else if(password == "") {
             alert("Password cannot be empty!");
+        } else if (confirmedPassword == "") {
+            alert("Confirmed Password cannot be empty!");
+        } else if (password != confirmedPassword) {
+            alert("Password and Confirmed Password should be same!");
         } else {
             $.ajax({
                 async: false,
                 type: "POST",
-                url: 'loginVerify',
-                data: $("#login-form").serialize(),
+                url: 'resetPasswordVerify',
+                data: $("#password-reset-form").serialize(),
                 dataType: "json",
-                success: function(resp) {
-                    if(resp.code == 0) {
-                        alert(resp.msg);
+                success: function(data) {
+                    if(data.code == 0) {
+                        alert(data.msg);
                     } else {
-                        window.location.href = "admin";
+                        window.location.href = "login";
                     }
                 },
                 error: function() {

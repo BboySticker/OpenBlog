@@ -29,7 +29,14 @@
             <a class="btn btn-sm btn-outline-secondary" href="<%=currentUser.getUserUrl() == null ? "register" : currentUser.getUserUrl()%>">
                 <%=currentUser.getUserName()%>
             </a>
-
+            <a class="btn btn-sm btn-outline-secondary" href="logout"
+               style="<%=currentUser.getUserUrl() == null ? "visibility:hidden;" : ""%>"
+                    <%=currentUser.getUserUrl() == null ? "disabled" : ""%>>
+                <%=currentUser.getUserUrl() == null ? "" : "Logout"%>
+            </a>
+            <script>
+                $("#logout-btn").disabled=true;
+            </script>
         </div>
     </div>
 </header>
