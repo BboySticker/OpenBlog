@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -20,14 +19,13 @@
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" href="https://getbootstrap.com//docs/4.4/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
-    <link rel="icon" href="https://getbootstrap.com//docs/4.4/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
-    <link rel="icon" href="https://getbootstrap.com//docs/4.4/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
-    <link rel="manifest" href="https://getbootstrap.com//docs/4.4/assets/img/favicons/manifest.json">
-    <link rel="mask-icon" href="https://getbootstrap.com//docs/4.4/assets/img/favicons/safari-pinned-tab.svg" color="#563d7c">
-    <link rel="icon" href="https://getbootstrap.com//docs/4.4/assets/img/favicons/favicon.ico">
-    <meta name="msapplication-config" content="https://getbootstrap.com//docs/4.4/assets/img/favicons/browserconfig.xml">
+<%--    <link rel="icon" href="https://getbootstrap.com//docs/4.4/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">--%>
+<%--    <link rel="icon" href="https://getbootstrap.com//docs/4.4/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">--%>
+<%--    <link rel="manifest" href="https://getbootstrap.com//docs/4.4/assets/img/favicons/manifest.json">--%>
+<%--    <link rel="mask-icon" href="https://getbootstrap.com//docs/4.4/assets/img/favicons/safari-pinned-tab.svg" color="#563d7c">--%>
+<%--    <link rel="icon" href="https://getbootstrap.com//docs/4.4/assets/img/favicons/favicon.ico">--%>
+<%--    <meta name="msapplication-config" content="https://getbootstrap.com//docs/4.4/assets/img/favicons/browserconfig.xml">--%>
     <meta name="theme-color" content="#563d7c">
-
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -46,11 +44,7 @@
     </style>
     <!-- Custom styles for this template -->
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="https://getbootstrap.com/docs/4.4/examples/blog/blog.css" rel="stylesheet">
     <style type="text/css">
-        /* stylelint-disable selector-list-comma-newline-after */
-
         .blog-header {
             line-height: 1;
             border-bottom: 1px solid #e5e5e5;
@@ -155,6 +149,7 @@
         .blog-footer p:last-child {
             margin-bottom: 0;
         }
+
     </style>
 </head>
 <body>
@@ -164,42 +159,30 @@
 
     <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
         <div class="col-md-6 px-0">
-            <h1 class="display-4 font-italic">Title of a longer featured blog post</h1>
-            <p class="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and efficiently about what’s most interesting in this post’s contents.</p>
-            <p class="lead mb-0"><a href="#" class="text-white font-weight-bold">Continue reading...</a></p>
+            <h1 class="display-4 font-italic">${jumbotron.articleTitle}</h1>
+            <p class="lead my-3">${jumbotron.articleSummary}</p>
+            <p class="lead mb-0"><a href="${jumbotron.articleId}" class="text-white font-weight-bold">Continue reading...</a></p>
         </div>
-    </div>
+    </div><!-- /.jumbotron -->
 
     <div class="row mb-2">
-        <div class="col-md-6">
-            <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <div class="col p-4 d-flex flex-column position-static">
-                    <strong class="d-inline-block mb-2 text-primary">World</strong>
-                    <h3 class="mb-0">Featured post</h3>
-                    <div class="mb-1 text-muted">Nov 12</div>
-                    <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="stretched-link">Continue reading</a>
-                </div>
-                <div class="col-auto d-none d-lg-block">
-                    <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <div class="col p-4 d-flex flex-column position-static">
-                    <strong class="d-inline-block mb-2 text-success">Design</strong>
-                    <h3 class="mb-0">Post title</h3>
-                    <div class="mb-1 text-muted">Nov 11</div>
-                    <p class="mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="stretched-link">Continue reading</a>
-                </div>
-                <div class="col-auto d-none d-lg-block">
-                    <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+        <c:forEach items="${featuredPosts}" var="featuredPost">
+            <div class="col-md-6">
+                <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <div class="col p-4 d-flex flex-column position-static">
+                        <strong class="d-inline-block mb-2 text-primary">World</strong>
+                        <h3 class="mb-0">${featuredPost.articleTitle}</h3>
+                        <div class="mb-1 text-muted">${featuredPost.articleCreateTime}</div>
+                        <p class="card-text mb-auto">${featuredPost.articleSummary}</p>
+                        <a href="${featuredPost.articleId}" class="stretched-link">Continue reading</a>
+                    </div>
+                    <div class="col-auto d-none d-lg-block">
+                        <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </c:forEach>
+    </div><!-- /.featured post -->
 </div>
 
 <main role="main" class="container">
