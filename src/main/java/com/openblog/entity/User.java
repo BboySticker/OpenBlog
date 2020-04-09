@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity
-@Table(name = "user")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "user")
 public class User {
 
     @Id
@@ -49,6 +49,9 @@ public class User {
 
     @Column(name = "token")
     private String token;
+
+    @Column(name = "isAdmin")
+    private Integer isAdmin;
 
     @Transient
     private Integer articleCount;

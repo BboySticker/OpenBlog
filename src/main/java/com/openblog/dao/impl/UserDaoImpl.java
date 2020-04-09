@@ -1,6 +1,5 @@
 package com.openblog.dao.impl;
 
-import com.openblog.controller.home.LoginController;
 import com.openblog.dao.UserDao;
 import com.openblog.entity.User;
 import org.hibernate.Query;
