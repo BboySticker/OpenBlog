@@ -1,12 +1,13 @@
 package com.openblog.controller.home;
 
 import com.openblog.entity.User;
-import com.openblog.service.EmailService;
 import com.openblog.service.UserService;
+import com.openblog.util.EmailUtil;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +30,9 @@ public class LoginController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     private Logger logger = LoggerFactory.getLogger(LoginController.class);
 
@@ -119,13 +123,14 @@ public class LoginController {
             User user = new User();
             user.setUserId(UUID.randomUUID().toString());
             user.setUserName(name);
-            user.setUserPass(password);
+            user.setUserPass(passwordEncoder.encode(password));
             user.setUserEmail(email);
             user.setUserUrl("user/" + name);
             user.setUserLastLoginIp(getIpAddr(request));
             user.setUserRegisterTime(new Date());
             user.setUserLastLoginTime(new Date());
             user.setUserStatus(1);  // 0 - abnormal, 1 - normal
+            user.setIsAdmin(0);  // 0 - not admin, 1 - admin
 
             userService.addUser(user);
             request.getSession().setAttribute("user", user);
@@ -157,13 +162,14 @@ public class LoginController {
         if (user == null) {
             map.put("code", 0);
             map.put("msg", "Invalid User!");
-        } else if (user.getUserPass() == null || !user.getUserPass().equals(password)) {
+        } else if (user.getUserPass() == null || !passwordEncoder.matches(password, user.getUserPass())) {
             map.put("code", 0);
             map.put("msg", "Wrong Password!");
         } else {
             // login successful
             map.put("code", 1);
             map.put("msg", "Successfully logged in!");
+            map.put("isAdmin", user.getIsAdmin());
             // add to session
             request.getSession().setAttribute("user", user);
             // add cookie
@@ -203,7 +209,7 @@ public class LoginController {
             map.put("code", 0);
             map.put("msg", "User Email Does Not Exists");
         } else {
-            String token = EmailService.sendResetEmail(email);
+            String token = EmailUtil.sendResetEmail(email);
             if (token == null) {
                 map.put("code", 0);
                 map.put("msg", "Failed to send email, please try again");
