@@ -20,6 +20,7 @@ public class Article {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer articleId;
 
     @Column(name = "userId")
@@ -52,10 +53,10 @@ public class Article {
     @Column(name = "articleOrder")
     private Integer articleOrder;
 
-    @Column(name = "content")
-    private String articleContent;
+    @Column(name = "content", columnDefinition = "TEXT")
+    private String articleContent;  // in markdown format
 
-    @Column(name = "summary")
+    @Column(name = "summary", columnDefinition = "TEXT")
     private String articleSummary;
 
     @OneToOne
@@ -63,11 +64,11 @@ public class Article {
     private User user;
 
     @Column(name = "tags")
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Tag> tagList = new ArrayList<Tag>();
 
     @Column(name = "categories")
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Category> categoryList = new ArrayList<Category>();
 
 }
