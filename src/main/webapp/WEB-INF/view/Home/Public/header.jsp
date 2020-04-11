@@ -12,7 +12,7 @@
             <a class="text-muted" href="#">Subscribe</a>
         </div>
         <div class="col-4 text-center">
-            <a class="blog-header-logo text-dark" href="#">Open Blog</a>
+            <a class="blog-header-logo text-dark" href="/OpenBlog">Open Blog</a>
         </div>
         <div class="col-4 d-flex justify-content-end align-items-center">
             <a class="text-muted" href="search" aria-label="Search">
@@ -46,8 +46,8 @@
 </header>
 <div class="nav-scroller py-1 mb-2">
     <nav class="nav d-flex justify-content-between">
-        <a class="p-2 text-muted" href="#">World</a>
-        <a class="p-2 text-muted" href="#">U.S.</a>
+        <a class="p-2 text-muted" href="#">Popular</a>
+        <a class="p-2 text-muted" href="#">Favourite</a>
         <a class="p-2 text-muted" href="#">Technology</a>
         <a class="p-2 text-muted" href="#">Design</a>
         <a class="p-2 text-muted" href="#">Culture</a>

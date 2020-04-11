@@ -2,7 +2,6 @@ package com.openblog.service;
 
 import com.openblog.entity.Article;
 
-import java.util.HashMap;
 import java.util.List;
 
 public interface ArticleService {
@@ -44,49 +43,46 @@ public interface ArticleService {
      */
     Integer countArticleByTagId(Integer tagId);
 
-
     /**
-     * 获得所有文章不分页
+     * Retrieve all articles in a list.
      *
-     * @param criteria 查询条件
-     * @return 列表
+     * @return List<Article>
      */
-    List<Article> listArticle(HashMap<String, Object> criteria);
+    List<Article> listArticle();
 
     /**
-     * 获得最新文章
+     * Retrieve certain number of most recent articles in a list.
      *
-     * @param limit 查询数量
-     * @return 列表
+     * @param limit
+     * @return List<Article>
      */
     List<Article> listRecentArticle(Integer limit);
 
-
     /**
-     * 修改文章详细信息
+     * Update article detail.
      *
-     * @param article 文章
+     * @param article
      */
     void updateArticleDetail(Article article);
 
     /**
-     * 修改文章简单信息
+     * Update article in general.
      *
-     * @param article 文章
+     * @param article
      */
     void updateArticle(Article article);
 
     /**
-     * 批量删除文章
+     * Delete articles in a batch.
      *
-     * @param ids 文章ID
+     * @param ids A list of Article ID
      */
     void deleteArticleBatch(List<Integer> ids);
 
     /**
-     * 删除文章
+     * Delete an article according to its ID.
      *
-     * @param id 文章ID
+     * @param id Article ID
      */
     void deleteArticle(Integer id);
 

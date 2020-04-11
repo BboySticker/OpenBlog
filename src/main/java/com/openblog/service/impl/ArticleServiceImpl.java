@@ -1,12 +1,18 @@
 package com.openblog.service.impl;
 
+import com.openblog.dao.ArticleDao;
 import com.openblog.entity.Article;
 import com.openblog.service.ArticleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
 
+@Service
 public class ArticleServiceImpl implements ArticleService {
+
+    @Autowired
+    ArticleDao articleDao;
 
     public Integer countArticle(Integer status) {
         return null;
@@ -28,12 +34,12 @@ public class ArticleServiceImpl implements ArticleService {
         return null;
     }
 
-    public List<Article> listArticle(HashMap<String, Object> criteria) {
+    public List<Article> listArticle() {
         return null;
     }
 
     public List<Article> listRecentArticle(Integer limit) {
-        return null;
+        return articleDao.listRecentArticle(limit);
     }
 
     public void updateArticleDetail(Article article) {
@@ -53,7 +59,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     public Article getArticleByStatusAndId(Integer status, Integer id) {
-        return null;
+        return articleDao.getArticleByStatusAndId(status, id);
     }
 
     public List<Article> listArticleByViewCount(Integer limit) {
@@ -77,7 +83,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     public void insertArticle(Article article) {
-
+        articleDao.insertArticle(article);
     }
 
     public void updateCommentCount(Integer articleId) {
