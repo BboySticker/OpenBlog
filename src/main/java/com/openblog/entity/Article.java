@@ -53,8 +53,11 @@ public class Article {
     @Column(name = "articleOrder")
     private Integer articleOrder;
 
+    /**
+     *  In markdown format
+     */
     @Column(name = "content", columnDefinition = "TEXT")
-    private String articleContent;  // in markdown format
+    private String articleContent;
 
     @Column(name = "summary", columnDefinition = "TEXT")
     private String articleSummary;
