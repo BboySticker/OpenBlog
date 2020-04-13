@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author bboysticker
+ */
 @Controller
 public class IndexController {
 
@@ -73,7 +76,8 @@ public class IndexController {
         User user = userService.listUser().get(0);
 
         Article newArticle1 = new Article();
-        newArticle1.setArticleContent(newArticleContent1);  // in HTML format
+        // in HTML format
+        newArticle1.setArticleContent(newArticleContent1);
         newArticle1.setArticleTitle("NEW ARTICLE 1");
         newArticle1.setArticleCreateTime(new Date());
         newArticle1.setArticleUserId(1001);
@@ -81,7 +85,7 @@ public class IndexController {
         newArticle1.setUser(user);
 
         Article newArticle2 = new Article();
-        newArticle2.setArticleContent(newArticleContent2);  // in HTML format
+        newArticle2.setArticleContent(newArticleContent2);
         newArticle2.setArticleTitle("NEW ARTICLE 2");
         newArticle2.setArticleCreateTime(new Date());;
         newArticle2.setArticleUserId(1002);
@@ -89,7 +93,7 @@ public class IndexController {
         newArticle2.setUser(user);
 
         Article newArticle3 = new Article();
-        newArticle3.setArticleContent(newArticleContent3);  // in HTML format
+        newArticle3.setArticleContent(newArticleContent3);
         newArticle3.setArticleTitle("NEW ARTICLE 3");
         newArticle3.setArticleCreateTime(new Date());;
         newArticle3.setArticleUserId(1003);

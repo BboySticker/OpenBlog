@@ -12,5 +12,6 @@
 </head>
 <body>
     <h1>Search Page for User to input key words</h1>
+    <h2>The keyword is: ${keyword}</h2>
 </body>
 </html>
