@@ -20,8 +20,8 @@
     </bean>
 
     <mvc:resources mapping="/resources/**" location="/resources/assets/"></mvc:resources>
-    <mvc:resources mapping="/css/**" location="/resources/assets/css/, classpath:/../webapp/resources/assets/css/"></mvc:resources>
-    <mvc:resources mapping="/js/**" location="/resources/assets/js/, classpath:/../webapp/resources/assets/js/"></mvc:resources>
-    <mvc:resources mapping="/img/**" location="/resources/assets/img/, classpath:/../webapp/resources/assets/img/"></mvc:resources>
+    <mvc:resources mapping="/css/**" location="/resources/assets/css/, classpath:/assets/css/"></mvc:resources>
+    <mvc:resources mapping="/js/**" location="/resources/assets/js/, classpath:/assets/js/"></mvc:resources>
+    <mvc:resources mapping="/img/**" location="/resources/assets/img/, classpath:/assets/img/"></mvc:resources>
 
 </beans>
