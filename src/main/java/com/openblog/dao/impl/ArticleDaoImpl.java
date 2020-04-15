@@ -26,10 +26,11 @@ public class ArticleDaoImpl implements ArticleDao {
     @Transactional
     public List<Article> listRecentArticle(Integer limit) {
         Session currentSession = sessionFactory.getCurrentSession();
-        String hqlQuery = "FROM Article WHERE articleStatus=1 ORDER BY articleCreateTime DESC";
-        Query query = currentSession.createQuery(hqlQuery);
+        Query query = currentSession.createQuery(
+                "FROM Article WHERE articleStatus=1 ORDER BY articleCreateTime DESC")
+                .setMaxResults(limit);
         List<Article> results = query.list();
-        return results.subList(0, limit);
+        return results;
     }
 
     @Transactional
@@ -43,4 +44,124 @@ public class ArticleDaoImpl implements ArticleDao {
         return result;
     }
 
+    @Transactional
+    public List<Article> listArticleByViewCount(Integer limit) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query query = currentSession.createQuery(
+                "FROM Article WHERE articleStatus=1 ORDER BY articleViewCount DESC, articleId DESC")
+                .setMaxResults(limit);
+        return query.list();
+    }
+
+    @Transactional
+    public Integer countArticle(Integer status) {
+        return null;
+    }
+
+    @Transactional
+    public Integer countArticleComment() {
+        return null;
+    }
+
+    @Transactional
+    public Integer countArticleView() {
+        return null;
+    }
+
+    @Transactional
+    public Integer countArticleByCategoryId(Integer categoryId) {
+        return null;
+    }
+
+    @Transactional
+    public Integer countArticleByTagId(Integer tagId) {
+        return null;
+    }
+
+    @Transactional
+    public List<Article> listArticle() {
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query query = currentSession.createQuery(
+                "FROM Article WHERE articleStatus=1 ORDER BY articleStatus ASC, articleId DESC");
+        return query.list();
+    }
+
+    @Transactional
+    public void updateArticleDetail(Article article) {
+
+    }
+
+    @Transactional
+    public void updateArticle(Article article) {
+
+    }
+
+    @Transactional
+    public void deleteArticleBatch(List<Integer> ids) {
+
+    }
+
+    @Transactional
+    public void deleteArticle(Article article) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        currentSession.delete(article);
+    }
+
+    @Transactional
+    public Article getAfterArticle(Integer id) {
+        return null;
+    }
+
+    @Transactional
+    public Article getPreArticle(Integer id) {
+        return null;
+    }
+
+    @Transactional
+    public List<Article> listRandomArticle(Integer limit) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query query = currentSession.createQuery(
+                "FROM Article WHERE articleStatus=1 ORDER BY RAND()")
+                .setMaxResults(limit);
+        return query.list();
+    }
+
+    @Transactional
+    public List<Article> listArticleByCommentCount(Integer limit) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query query = currentSession.createQuery(
+                "FROM Article WHERE articleStatus=1 ORDER BY articleCommentCount DESC, articleId DESC")
+                .setMaxResults(limit);
+        return query.list();
+    }
+
+    @Transactional
+    public void updateCommentCount(Integer articleId) {
+
+    }
+
+    @Transactional
+    public Article getLastUpdateArticle() {
+        return null;
+    }
+
+    @Transactional
+    public List<Article> listArticleByCategoryId(Integer cateId, Integer limit) {
+        return null;
+    }
+
+    @Transactional
+    public List<Article> listArticleByCategoryIds(List<Integer> cateIds, Integer limit) {
+        return null;
+    }
+
+    @Transactional
+    public List<Integer> listCategoryIdByArticleId(Integer articleId) {
+        return null;
+    }
+
+    @Transactional
+    public List<Article> listAllNotWithContent() {
+        return null;
+    }
 }

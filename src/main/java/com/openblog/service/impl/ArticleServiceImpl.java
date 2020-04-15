@@ -15,27 +15,27 @@ public class ArticleServiceImpl implements ArticleService {
     ArticleDao articleDao;
 
     public Integer countArticle(Integer status) {
-        return null;
+        return articleDao.countArticle(status);
     }
 
     public Integer countArticleComment() {
-        return null;
+        return articleDao.countArticleComment();
     }
 
     public Integer countArticleView() {
-        return null;
+        return articleDao.countArticleView();
     }
 
     public Integer countArticleByCategoryId(Integer categoryId) {
-        return null;
+        return articleDao.countArticleByCategoryId(categoryId);
     }
 
     public Integer countArticleByTagId(Integer tagId) {
-        return null;
+        return articleDao.countArticleByTagId(tagId);
     }
 
     public List<Article> listArticle() {
-        return null;
+        return articleDao.listArticle();
     }
 
     public List<Article> listRecentArticle(Integer limit) {
@@ -43,19 +43,19 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     public void updateArticleDetail(Article article) {
-
+        articleDao.updateArticleDetail(article);
     }
 
     public void updateArticle(Article article) {
-
+        articleDao.updateArticle(article);
     }
 
     public void deleteArticleBatch(List<Integer> ids) {
-
+        articleDao.deleteArticleBatch(ids);
     }
 
-    public void deleteArticle(Integer id) {
-
+    public void deleteArticle(Article article) {
+        articleDao.deleteArticle(article);
     }
 
     public Article getArticleByStatusAndId(Integer status, Integer id) {
@@ -63,23 +63,23 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     public List<Article> listArticleByViewCount(Integer limit) {
-        return null;
+        return articleDao.listArticleByViewCount(limit);
     }
 
     public Article getAfterArticle(Integer id) {
-        return null;
+        return articleDao.getAfterArticle(id);
     }
 
     public Article getPreArticle(Integer id) {
-        return null;
+        return articleDao.getPreArticle(id);
     }
 
     public List<Article> listRandomArticle(Integer limit) {
-        return null;
+        return articleDao.listRandomArticle(limit);
     }
 
     public List<Article> listArticleByCommentCount(Integer limit) {
-        return null;
+        return articleDao.listArticleByCommentCount(limit);
     }
 
     public void insertArticle(Article article) {
@@ -87,26 +87,26 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     public void updateCommentCount(Integer articleId) {
-
+        articleDao.updateCommentCount(articleId);
     }
 
     public Article getLastUpdateArticle() {
-        return null;
+        return articleDao.getLastUpdateArticle();
     }
 
     public List<Article> listArticleByCategoryId(Integer cateId, Integer limit) {
-        return null;
+        return articleDao.listArticleByCategoryId(cateId, limit);
     }
 
     public List<Article> listArticleByCategoryIds(List<Integer> cateIds, Integer limit) {
-        return null;
+        return articleDao.listArticleByCategoryIds(cateIds, limit);
     }
 
     public List<Integer> listCategoryIdByArticleId(Integer articleId) {
-        return null;
+        return articleDao.listCategoryIdByArticleId(articleId);
     }
 
     public List<Article> listAllNotWithContent() {
-        return null;
+        return articleDao.listAllNotWithContent();
     }
 }

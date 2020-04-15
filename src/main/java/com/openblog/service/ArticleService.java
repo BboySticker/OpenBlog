@@ -82,12 +82,12 @@ public interface ArticleService {
     /**
      * Delete an article according to its ID.
      *
-     * @param id Article ID
+     * @param article Article instance
      */
-    void deleteArticle(Integer id);
+    void deleteArticle(Article article);
 
     /**
-     * 分页显示
+     * Pagination
      *
      * @param pageIndex 第几页开始
      * @param pageSize  一页显示多少
@@ -97,66 +97,65 @@ public interface ArticleService {
 //    PageInfo<Article> pageArticle(Integer pageIndex, Integer pageSize, HashMap<String, Object> criteria);
 
     /**
-     * 文章详情页面显示
+     * Retrieve article by status and id.
      *
-     * @param status 状态
-     * @param id     文章ID
-     * @return 文章
+     * @param status
+     * @param id
+     * @return Article
      */
     Article getArticleByStatusAndId(Integer status, Integer id);
 
     /**
-     * 获取访问量较多的文章
+     * Retrieve articles based on view count.
      *
-     * @param limit 查询数量
-     * @return 列表
+     * @param limit
+     * @return List<Article>
      */
     List<Article> listArticleByViewCount(Integer limit);
 
     /**
-     * 获得上一篇文章
+     * Retrieve previous article based on current article id.
      *
-     * @param id 文章ID
-     * @return 文章
+     * @param id Article.articleId
+     * @return Article
      */
     Article getAfterArticle(Integer id);
 
     /**
-     * 获得下一篇文章
+     * Retrieve next article based on current article id.
      *
-     * @param id 文章ID
-     * @return 文章
+     * @param id
+     * @return Article
      */
     Article getPreArticle(Integer id);
 
     /**
-     * 获得随机文章
+     * Retrieve random article.
      *
-     * @param limit 查询数量
-     * @return 列表
+     * @param limit
+     * @return List<Article>
      */
     List<Article> listRandomArticle(Integer limit);
 
     /**
-     * 获得评论数较多的文章
+     * Retrieve articles based on comment count.
      *
-     * @param limit 查询数量
-     * @return 列表
+     * @param limit
+     * @return List<Article>
      */
     List<Article> listArticleByCommentCount(Integer limit);
 
     /**
-     * 添加文章
+     * Add new article.
      *
-     * @param article 文章
+     * @param article
      */
     void insertArticle(Article article);
 
-
     /**
-     * 更新文章的评论数
+     * Update article's comment count based on Comment schema.
      *
-     * @param articleId 文章ID
+     * @param articleId
      */
     void updateCommentCount(Integer articleId);
 

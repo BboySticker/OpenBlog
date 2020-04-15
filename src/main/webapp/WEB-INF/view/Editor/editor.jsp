@@ -127,15 +127,25 @@
     </style>
 </head>
 <body>
+    <%
+        String title = "";
+        String content = "";
+
+    %>
     <div class="container">
-        <jsp:include page="editor-header.jsp" /><!-- /.blog-header -->
+        <jsp:include page="Public/editor-header.jsp" /><!-- /.blog-header -->
         <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text">
                     Instructions:</br>
-                    You can click on</br>
+                    </br>
+                    Input need to</br>
+                    be in markdown</br>
+                    format</br>
+                    </br>
+                    Click on</br>
                     "Edit with StackEdit"</br>
-                    to write markdown</br>
+                    to preview</br>
                 </span>
             </div>
             <textarea name="article" class="form-control" aria-label="With textarea" rows="23" cols="50" form="article-form"></textarea>
@@ -147,7 +157,7 @@
         </div>
     </div>
 
-    <jsp:include page="editor-footer.jsp" /><!-- /.blog-footer -->
+    <jsp:include page="Public/editor-footer.jsp" /><!-- /.blog-footer -->
 
     <%-- StackEdit In-Bowser Markdown Editor --%>
     <%-- https://github.com/benweet/stackedit.js/blob/master/docs/lib/stackedit.js --%>

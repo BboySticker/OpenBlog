@@ -24,7 +24,7 @@ public class Article {
     private Integer articleId;
 
     @Column(name = "userId")
-    private Integer articleUserId;
+    private String articleUserId;
 
     @Column(name = "title")
     private String articleTitle;
@@ -54,11 +54,20 @@ public class Article {
     private Integer articleOrder;
 
     /**
-     *  In markdown format
+     *  Article content in html format
      */
     @Column(name = "content", columnDefinition = "TEXT")
     private String articleContent;
 
+    /**
+     *  Article content in markdown format
+     */
+    @Column(name = "contentInMd", columnDefinition = "TEXT")
+    private String articleContentInMd;
+
+    /**
+     *  Summary is a chunk of article content that in plain text
+     */
     @Column(name = "summary", columnDefinition = "TEXT")
     private String articleSummary;
 
