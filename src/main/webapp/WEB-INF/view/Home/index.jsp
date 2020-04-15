@@ -37,8 +37,8 @@
         }
     </style>
     <!-- Custom styles for this template -->
-    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
-    <link href="css/general.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet"/>
+    <link href="css/general.css" rel="stylesheet"/>
 </head>
 <body>
     <div class="container">
@@ -48,8 +48,8 @@
         <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
             <div class="col-md-6 px-0">
                 <h1 class="display-4 font-italic">${jumbotron.articleTitle}</h1>
-                <p class="lead my-3">${jumbotron.articleSummary}</p>
-                <p class="lead mb-0"><a href="article/${jumbotron.articleId}" class="text-white font-weight-bold">Continue reading...</a></p>
+                <p class="lead my-3">${jumbotron.articleSummary}......</p>
+                <p class="lead mb-0"><a href="/OpenBlog/article/${jumbotron.articleId}" class="text-white font-weight-bold">Continue reading...</a></p>
             </div>
         </div><!-- /.jumbotron -->
 
@@ -61,8 +61,8 @@
                             <strong class="d-inline-block mb-2 text-primary">World</strong>
                             <h3 class="mb-0">${featuredPost.articleTitle}</h3>
                             <div class="mb-1 text-muted">${featuredPost.articleCreateTime}</div>
-                            <p class="card-text mb-auto">${featuredPost.articleSummary}</p>
-                            <a href="article/${featuredPost.articleId}" class="stretched-link">Continue reading</a>
+                            <p class="card-text mb-auto">${featuredPost.articleSummary.substring(0,100)}......</p>
+                            <a href="/OpenBlog/article/${featuredPost.articleId}" class="stretched-link">Continue reading</a>
                         </div>
                         <div class="col-auto d-none d-lg-block">
                             <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
@@ -83,7 +83,7 @@
                 <c:forEach items="${whatsNewToday}" var="newArticle">
                     <div class="blog-post">
                         <h2 class="blog-post-title">${newArticle.articleTitle}</h2>
-                        <p class="blog-post-meta">${newArticle.articleCreateTime} by <a href="user/${newArticle.articleUserId}">${newArticle.user.getUserName()}</a></p>
+                        <p class="blog-post-meta">${newArticle.articleCreateTime} by <a href="/OpenBlog/user/${newArticle.articleUserId}">${newArticle.user.getUserName()}</a></p>
                         ${newArticle.articleContent} <!-- Insert Rich HTML here -->
                     </div><!-- /.blog-post -->
                 </c:forEach>

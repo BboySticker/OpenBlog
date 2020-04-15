@@ -1,6 +1,6 @@
 <%--footer start--%>
 <footer class="blog-footer">
-    <p>Copyright &copy; 2020 &mdash; Xinyu Zhang @ NEU</p>
+    <p>Copyright &copy; 2020 &mdash; Xinyu Zhang</p>
     <p>
         <a href="/OpenBlog/index">Back to Home</a>
     </p>

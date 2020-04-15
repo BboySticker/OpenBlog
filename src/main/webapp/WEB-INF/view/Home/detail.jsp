@@ -144,32 +144,32 @@
     </style>
 </head>
 <body>
-<div class="container">
-    <jsp:include page="Public/header.jsp" /><!-- /.blog-header -->
-</div>
+    <div class="container">
+        <jsp:include page="Public/header.jsp" /><!-- /.blog-header -->
+    </div>
 
-<main role="main" class="container">
-    <div class="row">
-        <div class="col-md-8 blog-main">
-            <div class="blog-post">
-                <h2 class="blog-post-title">${article.articleTitle}</h2>
-                <p class="blog-post-meta">${article.articleCreateTime} by <a href="user/${article.articleUserId}">${article.user.getUserName()}</a></p>
-                ${article.articleContent} <!-- Insert Rich HTML here -->
-            </div><!-- /.blog-post -->
+    <main role="main" class="container">
+        <div class="row">
+            <div class="col-md-8 blog-main">
+                <div class="blog-post">
+                    <h2 class="blog-post-title">${article.articleTitle}</h2>
+                    <p class="blog-post-meta">${article.articleCreateTime} by <a href="/OpenBlog/user/${article.articleUserId}">${article.user.getUserName()}</a></p>
+                    ${article.articleContent} <!-- Insert Rich HTML here -->
+                </div><!-- /.blog-post -->
 
-            <nav class="blog-pagination">
-                <a class="btn btn-outline-primary" href="#">Older</a>
-                <a class="btn btn-outline-secondary disabled" href="#" tabindex="-1" aria-disabled="true">Newer</a>
-            </nav>
-        </div><!-- /.blog-main -->
+                <nav class="blog-pagination">
+                    <a class="btn btn-outline-primary" href="#">Older</a>
+                    <a class="btn btn-outline-secondary disabled" href="#" tabindex="-1" aria-disabled="true">Newer</a>
+                </nav>
+            </div><!-- /.blog-main -->
 
-        <jsp:include page="Public/sidebar-1.jsp" /><!-- /.blog-sidebar -->
+            <jsp:include page="Public/sidebar-1.jsp" /><!-- /.blog-sidebar -->
 
-    </div><!-- /.row -->
+        </div><!-- /.row -->
 
-</main><!-- /.container -->
+    </main><!-- /.container -->
 
-<jsp:include page="Public/footer-2.jsp" /><!-- /.blog-footer -->
+    <jsp:include page="Public/footer-2.jsp" /><!-- /.blog-footer -->
 
 </body>
 </html>
