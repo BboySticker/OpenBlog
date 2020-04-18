@@ -73,13 +73,45 @@ public class EditorController {
         article.setArticleOrder(0);
         article.setArticleContent(html);
         article.setArticleContentInMd(articleContent);
-        article.setArticleSummary(converted.substring(0, 300));
+        String summary = converted.length() > 300 ? converted.substring(0, 300) : converted;
+        article.setArticleSummary(summary);
         article.setUser(currentUser);
-//        article.setTagList();
-//        article.setCategoryList();
+
+        //article.setTagList();
+        //article.setCategoryList();
 
         articleService.insertArticle(article);
-        model.addAttribute("article", article);
+        return "redirect:/article/" + article.getArticleId();
+    }
+
+    @PostMapping("/editor/drafts/update")
+    public String updateArticle(HttpServletRequest request, Model model) {
+        String articleId = request.getParameter("articleId");
+        Article article = null;
+        try {
+            article = articleService.getArticleByStatusAndId(1, Integer.parseInt(articleId));
+        } catch (Exception ex) {
+            model.addAttribute("msg", "Update article " + articleId + " failed");
+            return "Home/error";
+        }
+        String articleContent = request.getParameter("article");
+        // transfer markdown to html
+        Parser parser = Parser.builder().build();
+        HtmlRenderer renderer = HtmlRenderer.builder().build();
+        Node document = parser.parse(articleContent);
+        String html = renderer.render(document);
+
+        // transfer html to plain text
+        HtmlToPlainText formatter = new HtmlToPlainText();
+        String converted = formatter.getPlainText(Jsoup.parse(html));
+
+        article.setArticleTitle(request.getParameter("title"));
+        article.setArticleContentInMd(articleContent);
+        article.setArticleContent(html);
+        String summary = converted.length() > 300 ? converted.substring(0, 300) : converted;
+        article.setArticleSummary(summary);
+
+        articleService.updateArticle(article);
         return "redirect:/article/" + article.getArticleId();
     }
 
