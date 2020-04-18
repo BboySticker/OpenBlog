@@ -1,12 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+<!doctype html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Jekyll v3.8.6">
-    <title>Error - ${articleId}</title>
+    <title>${user.userName}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="https://getbootstrap.com//docs/4.4/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -33,7 +35,6 @@
     </style>
     <!-- Custom styles for this template -->
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
-    <link href="css/general.css" rel="stylesheet" />
     <style type="text/css">
         .blog-header {
             line-height: 1;
@@ -49,7 +50,7 @@
             text-decoration: none;
         }
 
-        h1, h2, h3, h4, h5, h6 {
+        h1, h2, h3, h4, h5, h6, #article-title {
             font-family: "Playfair Display", Georgia, "Times New Roman", serif;
         }
 
@@ -115,11 +116,11 @@
          * Blog posts
          */
         .blog-post {
-            margin-bottom: 4rem;
+            margin-bottom: 2rem;
         }
         .blog-post-title {
             margin-bottom: .25rem;
-            font-size: 2.5rem;
+            font-size: 1.5rem;
         }
         .blog-post-meta {
             margin-bottom: 1.25rem;
@@ -143,12 +144,38 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <jsp:include page="Public/header.jsp"/>
-        <br><br><br><br><br><br><br><br><br><br>
-        <h1 class="text-center">${msg}</h1>
-        <br><br><br><br><br><br><br><br><br><br>
-    </div>
-    <jsp:include page="Public/footer-2.jsp"/>
+<div class="container">
+    <jsp:include page="../Home/Public/header.jsp" /><!-- /.blog-header -->
+</div>
+
+<main role="main" class="container">
+    <div class="row">
+        <div class="col-md-8 blog-main">
+            <c:forEach items="${articleList}" var="article">
+                <div class="blog-post">
+                    <a id="article-title" href="/OpenBlog/article/${article.articleId}" class="blog-post-title">${article.articleTitle}</a>
+                    <p class="blog-post-meta">${article.articleCreateTime}</p>
+                    <p>${article.articleSummary}......</p>
+                    <div>
+                        <a class="btn btn-sm btn-outline-secondary" href="/OpenBlog/article/edit/${article.articleId}">Edit</a>
+                        <a class="btn btn-sm btn-outline-secondary" href="/OpenBlog/article/delete/${article.articleId}">Delete</a>
+                    </div>
+                </div><!-- /.blog-post -->
+            </c:forEach>
+
+            <nav class="blog-pagination">
+                <a class="btn btn-outline-primary" href="#">Older</a>
+                <a class="btn btn-outline-secondary disabled" href="#" tabindex="-1" aria-disabled="true">Newer</a>
+            </nav>
+        </div><!-- /.blog-main -->
+
+        <jsp:include page="../Home/Public/sidebar-1.jsp" /><!-- /.blog-sidebar -->
+
+    </div><!-- /.row -->
+
+</main><!-- /.container -->
+
+<jsp:include page="../Home/Public/footer-2.jsp" /><!-- /.blog-footer -->
+
 </body>
 </html>

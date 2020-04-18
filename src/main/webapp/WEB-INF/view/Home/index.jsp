@@ -61,7 +61,7 @@
                             <strong class="d-inline-block mb-2 text-primary">World</strong>
                             <h3 class="mb-0">${featuredPost.articleTitle}</h3>
                             <div class="mb-1 text-muted">${featuredPost.articleCreateTime}</div>
-                            <p class="card-text mb-auto">${featuredPost.articleSummary.substring(0,100)}......</p>
+                            <p class="card-text mb-auto">${featuredPost.articleSummary.length() > 100 ? featuredPost.articleSummary.substring(0,100) : featuredPost.articleSummary}......</p>
                             <a href="/OpenBlog/article/${featuredPost.articleId}" class="stretched-link">Continue reading</a>
                         </div>
                         <div class="col-auto d-none d-lg-block">
