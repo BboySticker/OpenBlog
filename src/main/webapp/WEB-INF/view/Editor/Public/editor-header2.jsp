@@ -13,7 +13,7 @@
         <div class="col-6">
             <div class="row flex-nowrap justify-content-end align-items-center">
                 <div class="col-6 text-right">
-                    <form action="/OpenBlog/article/list" method="get">
+                    <form action="/OpenBlog/article/list/1" method="get">
                         <div class="input-group input-group-sm form-inline">
                             <input type="hidden" name="action" value="search">
                             <input id="search-input" name="keyword" type="search" class="form-control form-control-sm" placeholder="Search..." />

@@ -1,17 +1,11 @@
 package com.openblog.util;
 
-import org.jsoup.Jsoup;
 import org.jsoup.internal.StringUtil;
-import org.jsoup.helper.Validate;
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
-import org.jsoup.select.Elements;
 import org.jsoup.select.NodeTraversor;
 import org.jsoup.select.NodeVisitor;
-
-import java.io.IOException;
 
 /**
  * HTML to plain-text. This example program demonstrates the use of jsoup to convert HTML input to lightly-formatted
@@ -30,30 +24,6 @@ import java.io.IOException;
 public class HtmlToPlainText {
     private static final String userAgent = "Mozilla/5.0 (jsoup)";
     private static final int timeout = 5 * 1000;
-
-//    public static void main(String... args) throws IOException {
-//        Validate.isTrue(args.length == 1 || args.length == 2, "usage: java -cp jsoup.jar org.jsoup.examples.HtmlToPlainText url [selector]");
-//        final String url = args[0];
-//        final String selector = args.length == 2 ? args[1] : null;
-//
-//        // fetch the specified URL and parse to a HTML DOM
-//        Document doc = Jsoup.connect(url).userAgent(userAgent).timeout(timeout).get();
-//
-//        HtmlToPlainText formatter = new HtmlToPlainText();
-//
-//        if (selector != null) {
-//            // get each element that matches the CSS selector
-//            Elements elements = doc.select(selector);
-//            for (Element element : elements) {
-//                // format that element to plain text
-//                String plainText = formatter.getPlainText(element);
-//                System.out.println(plainText);
-//            }
-//        } else { // format the whole doc
-//            String plainText = formatter.getPlainText(doc);
-//            System.out.println(plainText);
-//        }
-//    }
 
     /**
      * Format an Element to plain-text

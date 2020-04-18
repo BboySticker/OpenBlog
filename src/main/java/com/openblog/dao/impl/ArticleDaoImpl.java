@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class ArticleDaoImpl implements ArticleDao {
@@ -27,7 +29,8 @@ public class ArticleDaoImpl implements ArticleDao {
     public List<Article> listRecentArticle(Integer limit) {
         Session currentSession = sessionFactory.getCurrentSession();
         Query query = currentSession.createQuery(
-                "FROM Article WHERE articleStatus=1 ORDER BY articleCreateTime DESC")
+                "FROM Article WHERE articleStatus=1 " +
+                        "ORDER BY articleCreateTime DESC")
                 .setMaxResults(limit);
         List<Article> results = query.list();
         return results;
@@ -48,7 +51,8 @@ public class ArticleDaoImpl implements ArticleDao {
     public List<Article> listArticleByViewCount(Integer limit) {
         Session currentSession = sessionFactory.getCurrentSession();
         Query query = currentSession.createQuery(
-                "FROM Article WHERE articleStatus=1 ORDER BY articleViewCount DESC, articleId DESC")
+                "FROM Article WHERE articleStatus=1 " +
+                        "ORDER BY articleViewCount DESC, articleId DESC")
                 .setMaxResults(limit);
         return query.list();
     }
@@ -82,7 +86,8 @@ public class ArticleDaoImpl implements ArticleDao {
     public List<Article> listArticle() {
         Session currentSession = sessionFactory.getCurrentSession();
         Query query = currentSession.createQuery(
-                "FROM Article WHERE articleStatus=1 ORDER BY articleStatus ASC, articleId DESC");
+                "FROM Article WHERE articleStatus=1 " +
+                        "ORDER BY articleStatus ASC, articleId DESC");
         return query.list();
     }
 
@@ -93,7 +98,8 @@ public class ArticleDaoImpl implements ArticleDao {
 
     @Transactional
     public void updateArticle(Article article) {
-
+        Session currentSession = sessionFactory.getCurrentSession();
+        currentSession.update(article);
     }
 
     @Transactional
@@ -105,6 +111,23 @@ public class ArticleDaoImpl implements ArticleDao {
     public void deleteArticle(Article article) {
         Session currentSession = sessionFactory.getCurrentSession();
         currentSession.delete(article);
+    }
+
+    @Transactional
+    public List<Article> pageArticle(Integer pageIndex, Integer pageSize, Map<String, Object> criteria) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        String hql = "FROM Article WHERE articleStatus=1";
+        if (criteria.containsKey("category")) {
+            hql = hql + " AND articleCategory=" + criteria.get("categoryId");
+        } else if (criteria.containsKey("tag")) {
+            hql = hql + " AND articleTag=" + criteria.get("tagId");
+        } else if (criteria.containsKey("user")) {
+            hql = hql + " AND articleUserId=" + criteria.get("userId");
+        }
+        Query query = currentSession.createQuery(hql)
+                .setFirstResult(pageIndex)
+                .setMaxResults(pageSize);
+        return query.list();
     }
 
     @Transactional
@@ -130,7 +153,8 @@ public class ArticleDaoImpl implements ArticleDao {
     public List<Article> listArticleByCommentCount(Integer limit) {
         Session currentSession = sessionFactory.getCurrentSession();
         Query query = currentSession.createQuery(
-                "FROM Article WHERE articleStatus=1 ORDER BY articleCommentCount DESC, articleId DESC")
+                "FROM Article WHERE articleStatus=1 " +
+                        "ORDER BY articleCommentCount DESC, articleId DESC")
                 .setMaxResults(limit);
         return query.list();
     }
@@ -147,7 +171,13 @@ public class ArticleDaoImpl implements ArticleDao {
 
     @Transactional
     public List<Article> listArticleByCategoryId(Integer cateId, Integer limit) {
-        return null;
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query query = currentSession.createQuery(
+                "FROM Article WHERE articleCategoryId=:cateId and articleStatus=1 " +
+                        "ORDER BY articleCreateTime DESC")
+                .setInteger("cateId", cateId)
+                .setMaxResults(limit);
+        return query.list();
     }
 
     @Transactional
@@ -163,5 +193,15 @@ public class ArticleDaoImpl implements ArticleDao {
     @Transactional
     public List<Article> listAllNotWithContent() {
         return null;
+    }
+
+    @Transactional
+    public List<Article> listArticleByAuthor(String userId) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query query = currentSession.createQuery(
+                "FROM Article WHERE userId=:userId and articleStatus=1 " +
+                        "ORDER BY articleCreateTime DESC")
+                .setString("userId", userId);
+        return query.list();
     }
 }

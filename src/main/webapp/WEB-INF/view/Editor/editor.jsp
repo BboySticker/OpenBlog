@@ -148,7 +148,7 @@
                     to preview</br>
                 </span>
             </div>
-            <textarea name="article" class="form-control" aria-label="With textarea" rows="23" cols="50" form="article-form"></textarea>
+            <textarea id="article" name="article" class="form-control" aria-label="With textarea" rows="23" cols="50" form="article-form">${article == null ? "" : article.articleContentInMd}</textarea>
         </div>
         <div class="stackedit-button-wrapper">
             <a href="javascript:open()">
@@ -180,6 +180,20 @@
         stackedit.on('fileChange', (file) => {
             el.value = file.content.text;
         });
+    </script>
+    <script>
+        'use strict';
+
+            $("#publish-btn").click(function() {
+                // var form = $(".my-login-validation");
+                var title = $("#title").val();
+                var content = $("#article").val();
+                if(title == "") {
+                    alert("Title cannot be empty!");
+                } else if(content == "") {
+                    alert("Article content cannot be empty!");
+                }
+            });
     </script>
 </body>
 </html>
