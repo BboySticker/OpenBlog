@@ -3,6 +3,7 @@ package com.openblog.service;
 import com.openblog.entity.Article;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ArticleService {
     /**
@@ -94,7 +95,7 @@ public interface ArticleService {
      * @param criteria  查询条件
      * @return 文章列表
      */
-//    PageInfo<Article> pageArticle(Integer pageIndex, Integer pageSize, HashMap<String, Object> criteria);
+    List<Article> pageArticle(Integer pageIndex, Integer pageSize, Map<String, Object> criteria);
 
     /**
      * Retrieve article by status and id.
@@ -199,4 +200,12 @@ public interface ArticleService {
      * @return 列表
      */
     List<Article> listAllNotWithContent();
+
+    /**
+     * Retrieve articles from a perticular user
+     *
+     * @param userId
+     * @return
+     */
+    List<Article> listArticleByAuthor(String userId);
 }
