@@ -14,6 +14,13 @@ public interface UserService {
     List<User> listUser();
 
     /**
+     * Get all users except admins
+     *
+     * @return a list of User instances
+     */
+    List<User> listUserNotAdmin();
+
+    /**
      * Retrieve User by Id
      *
      * @param id

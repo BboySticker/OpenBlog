@@ -1,11 +1,10 @@
 package com.openblog.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Builder
@@ -17,7 +16,7 @@ public class Tag {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer tagId;
 
     @Column(name = "name")
@@ -25,6 +24,11 @@ public class Tag {
 
     @Column(name = "description")
     private String tagDescription;
+
+    @Column(name = "articles")
+    @OneToMany(mappedBy = "articleTag", fetch = FetchType.EAGER)
+    @ToString.Exclude
+    private List<Article> articles = new ArrayList<Article>();
 
     /**
      * Number of article.

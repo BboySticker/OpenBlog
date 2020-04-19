@@ -1,10 +1,10 @@
-package com.openblog.service;
+package com.openblog.dao;
 
 import com.openblog.entity.Category;
 
 import java.util.List;
 
-public interface CategoryService {
+public interface CategoryDao {
 
     /**
      * 获得分类总数

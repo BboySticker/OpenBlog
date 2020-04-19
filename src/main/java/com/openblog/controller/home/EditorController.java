@@ -1,8 +1,12 @@
 package com.openblog.controller.home;
 
 import com.openblog.entity.Article;
+import com.openblog.entity.Category;
+import com.openblog.entity.Tag;
 import com.openblog.entity.User;
 import com.openblog.service.ArticleService;
+import com.openblog.service.CategoryService;
+import com.openblog.service.TagService;
 import com.openblog.util.HtmlToPlainText;
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
@@ -28,6 +32,12 @@ public class EditorController {
 
     @Autowired
     private ArticleService articleService;
+
+    @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
+    private TagService tagService;
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -77,11 +87,10 @@ public class EditorController {
         article.setArticleSummary(summary);
         article.setUser(currentUser);
 
-        //article.setTagList();
-        //article.setCategoryList();
-
         articleService.insertArticle(article);
-        return "redirect:/article/" + article.getArticleId();
+        session.setAttribute("article", article);
+        model.addAttribute("article", article);
+        return "redirect:/editor/drafts/preview";
     }
 
     @PostMapping("/editor/drafts/update")
@@ -105,6 +114,8 @@ public class EditorController {
         HtmlToPlainText formatter = new HtmlToPlainText();
         String converted = formatter.getPlainText(Jsoup.parse(html));
 
+        // update edit time
+        article.setArticleUpdateTime(new Date());
         article.setArticleTitle(request.getParameter("title"));
         article.setArticleContentInMd(articleContent);
         article.setArticleContent(html);
@@ -118,6 +129,45 @@ public class EditorController {
     @GetMapping("/editor/drafts")
     public String viewDrafts(HttpServletRequest request, Model model) {
         return "Editor/drafts";
+    }
+
+    @GetMapping("/editor/drafts/preview")
+    public String getPreviewArticle() {
+        return "Editor/preview";
+    }
+
+    @PostMapping("/editor/drafts/preview")
+    public String postPreviewArticle(HttpServletRequest request, HttpSession session, Model model) {
+        Article article = (Article) session.getAttribute("article");
+        session.removeAttribute("article");
+
+        // parse category info and update article category attribute
+        String categoryIdStr = request.getParameter("category");
+        Integer categoryId = 0;
+        if (categoryIdStr != null) {
+            categoryId = Integer.parseInt(categoryIdStr);
+        }
+        Category category = categoryService.getCategoryById(categoryId);
+        article.setArticleCategory(category);
+        category.getArticles().add(article);
+        categoryService.updateCategory(category);
+
+        // parse tag info and update article tag attribute
+        String tagName = request.getParameter("tag");
+        if (tagName != null && tagName != "") {
+            Tag tag = tagService.getTagByName(tagName);
+            if (tag == null) {
+                tag = new Tag();
+                tag.setTagName(tagName);
+                tag.getArticles().add(article);
+                tag.setTagDescription("");
+                tagService.insertTag(tag);
+            }
+            article.setArticleTag(tag);
+        }
+        articleService.updateArticle(article);
+        model.addAttribute("article", article);
+        return "redirect:/article/" + article.getArticleId();
     }
 
 }

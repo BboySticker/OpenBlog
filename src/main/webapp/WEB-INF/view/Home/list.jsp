@@ -154,12 +154,15 @@
             <div class="col-md-8 blog-main">
                 <%
                     String displayedTitle = "";
-                    String action = response.getHeader("action");
                     String keyword = response.getHeader("keyword");
-                    if (action.equalsIgnoreCase("search")) {
+                    if (keyword == null) {
+                        displayedTitle = "";
+                    } else if (keyword.equalsIgnoreCase("search")) {
                         displayedTitle = "Search Results";
-                    } else {
-                        displayedTitle = "Articles: " + keyword;
+                    } else if (keyword.equalsIgnoreCase("category")) {
+                        displayedTitle = "Category: " + request.getParameter("category");
+                    } else if (keyword.equalsIgnoreCase("tag")) {
+                        displayedTitle = "Tag: " + request.getParameter("tag");
                     }
                 %>
                 <h2 class="text-center"><%=displayedTitle%></h2>
@@ -173,11 +176,8 @@
                 </c:forEach>
 
                 <nav class="blog-pagination">
-                    <a class="btn btn-outline-primary" href="#">Older</a>
-                    <a class="btn btn-outline-secondary disabled" href="#" tabindex="-1" aria-disabled="true">Newer</a>
-                    <br>
                     <c:forEach var="i" begin="1" end="${pageCount}">
-                        <a class="btn btn-outline-primary" href="/OpenBlog/article/list/${i}?action=search&keyword=a">${i}</a>
+                        <a class="btn btn-outline-primary ${i == pageIndex ? "disabled" : ""}" href="/OpenBlog/article/list/${i}?action=search&keyword=a">${i}</a>
                     </c:forEach>
                 </nav>
             </div><!-- /.blog-main -->

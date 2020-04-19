@@ -87,11 +87,6 @@
                         ${newArticle.articleContent} <!-- Insert Rich HTML here -->
                     </div><!-- /.blog-post -->
                 </c:forEach>
-
-                <nav class="blog-pagination">
-                    <a class="btn btn-outline-primary" href="#">Older</a>
-                    <a class="btn btn-outline-secondary disabled" href="#" tabindex="-1" aria-disabled="true">Newer</a>
-                </nav>
             </div><!-- /.blog-main -->
 
             <jsp:include page="Public/sidebar-1.jsp" /><!-- /.blog-sidebar -->

@@ -8,7 +8,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>${article.articleTitle}</title>
+    <title>Preview - ${article.articleTitle}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="https://getbootstrap.com//docs/4.4/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -141,11 +141,45 @@
             margin-bottom: 0;
         }
 
+        div label input {
+            margin-right:100px;
+        }
+        body {
+            font-family:sans-serif;
+        }
+
+        .btn-group {
+            margin-bottom: 1rem;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <jsp:include page="Public/header.jsp" /><!-- /.blog-header -->
+        <header class="blog-header py-3">
+            <div class="row flex-nowrap justify-content-between align-items-center">
+                <div class="col-4 text-left">
+                    <a class="blog-header-logo text-dark" href="/OpenBlog">Open Blog</a>
+                </div>
+                <div class="col-8">
+                    <form action="${article == null ? "/OpenBlog/editor/drafts/save" : "/OpenBlog/editor/drafts/preview"}" id="article-form" method="post">
+                        <div class="row">
+                            <div class="col-6 text-center input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Title</span>
+                                </div>
+                                <input id="title" type="text" class="form-control" name="title" value="${article == null ? "" : article.articleTitle}" disabled>
+                            </div>
+                            <div class="col-6 text-right">
+                                <button id="publish-btn" type="submit" class="btn btn-outline-secondary">
+                                    ${article == null ? "Publish" : "Update"}
+                                </button>
+                            </div>
+                        </div>
+                        <input type="hidden" name="articleId" value="${article.articleId}">
+                    </form>
+                </div>
+            </div>
+        </header><!-- /.blog-header -->
     </div>
 
     <main role="main" class="container">
@@ -156,15 +190,48 @@
                     <p class="blog-post-meta">${article.articleCreateTime} by <a href="/OpenBlog/user/${article.user.userName}">${article.user.userName}</a></p>
                     ${article.articleContent} <!-- Insert Rich HTML here -->
                 </div><!-- /.blog-post -->
+
+                <nav class="blog-pagination">
+                    <a class="btn btn-outline-primary" href="#">Older</a>
+                    <a class="btn btn-outline-secondary disabled" href="#" tabindex="-1" aria-disabled="true">Newer</a>
+                </nav>
             </div><!-- /.blog-main -->
 
-            <jsp:include page="Public/detail-sidebar.jsp" /><!-- /.blog-sidebar -->
+            <aside class="col-md-4 blog-sidebar">
+                <div class="p-4 mb-3 bg-light rounded">
+                    <h4 class="font-italic">Instruction</h4>
+                    <p class="mb-0">Please select Categories and Tags</p>
+                </div>
 
+                <div class="p-4">
+                    <h4 class="font-italic">Categories</h4>
+                    <select class="form-control" name="category" form="article-form">
+                        <option value="1">Technology</option>
+                        <option value="2">Design</option>
+                        <option value="3">Culture</option>
+                        <option value="4">Business</option>
+                        <option value="5">Politics</option>
+                        <option value="6">Opinion</option>
+                        <option value="7">Science</option>
+                        <option value="8">Health</option>
+                        <option value="9">Style</option>
+                        <option value="10">Travel</option>
+                    </select>
+                </div>
+
+                <div class="p-4">
+                    <h4 class="font-italic">Tag</h4>
+                    <div class="input-group mb-3">
+                        <input type="text" id="tag" name="tag" class="form-control"
+                               placeholder="Write the tag you want to add..." aria-label="Username"
+                               aria-describedby="basic-addon1" form="article-form"/>
+                    </div>
+                </div>
+            </aside><!-- /.blog-sidebar -->
         </div><!-- /.row -->
-
     </main><!-- /.container -->
 
-    <jsp:include page="Public/footer-2.jsp" /><!-- /.blog-footer -->
+    <jsp:include page="../Home/Public/footer-2.jsp" /><!-- /.blog-footer -->
 
 </body>
 </html>
