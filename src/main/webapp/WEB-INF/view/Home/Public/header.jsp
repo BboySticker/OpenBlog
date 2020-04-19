@@ -62,16 +62,16 @@
     <nav class="nav d-flex justify-content-between">
         <a class="p-2 text-muted" href="#">Popular</a>
         <a class="p-2 text-muted" href="#">Favourite</a>
-        <a class="p-2 text-muted" href="#">Technology</a>
-        <a class="p-2 text-muted" href="#">Design</a>
-        <a class="p-2 text-muted" href="#">Culture</a>
-        <a class="p-2 text-muted" href="#">Business</a>
-        <a class="p-2 text-muted" href="#">Politics</a>
-        <a class="p-2 text-muted" href="#">Opinion</a>
-        <a class="p-2 text-muted" href="#">Science</a>
-        <a class="p-2 text-muted" href="#">Health</a>
-        <a class="p-2 text-muted" href="#">Style</a>
-        <a class="p-2 text-muted" href="#">Travel</a>
+        <a class="p-2 text-muted" href="/OpenBlog/category/technology/1">Technology</a>
+        <a class="p-2 text-muted" href="/OpenBlog/category/design/1">Design</a>
+        <a class="p-2 text-muted" href="/OpenBlog/category/culture/1">Culture</a>
+        <a class="p-2 text-muted" href="/OpenBlog/category/business/1">Business</a>
+        <a class="p-2 text-muted" href="/OpenBlog/category/politics/1">Politics</a>
+        <a class="p-2 text-muted" href="/OpenBlog/category/opinion/1">Opinion</a>
+        <a class="p-2 text-muted" href="/OpenBlog/category/science/1">Science</a>
+        <a class="p-2 text-muted" href="/OpenBlog/category/health/1">Health</a>
+        <a class="p-2 text-muted" href="/OpenBlog/category/style/1">Style</a>
+        <a class="p-2 text-muted" href="/OpenBlog/category/travel/1">Travel</a>
     </nav>
 </div>
 <%--Header End--%>

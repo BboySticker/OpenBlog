@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -74,7 +73,11 @@ public class ArticleDaoImpl implements ArticleDao {
 
     @Transactional
     public Integer countArticleByCategoryId(Integer categoryId) {
-        return null;
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query query = currentSession.createQuery(
+                "SELECT count(*) FROM Article WHERE articleCategory=:cateId")
+                .setInteger("cateId", categoryId);
+        return Integer.valueOf(Math.toIntExact((Long) query.uniqueResult()));
     }
 
     @Transactional
@@ -173,7 +176,7 @@ public class ArticleDaoImpl implements ArticleDao {
     public List<Article> listArticleByCategoryId(Integer cateId, Integer limit) {
         Session currentSession = sessionFactory.getCurrentSession();
         Query query = currentSession.createQuery(
-                "FROM Article WHERE articleCategoryId=:cateId and articleStatus=1 " +
+                "FROM Article WHERE articleCategory=:cateId and articleStatus=1 " +
                         "ORDER BY articleCreateTime DESC")
                 .setInteger("cateId", cateId)
                 .setMaxResults(limit);

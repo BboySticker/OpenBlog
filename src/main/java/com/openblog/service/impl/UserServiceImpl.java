@@ -21,6 +21,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
+    public List<User> listUserNotAdmin() {
+        return userDao.listUserNotAdmin();
+    }
+
+    @Transactional
     public User getUserById(String id) {
         return userDao.getUserById(id);
     }

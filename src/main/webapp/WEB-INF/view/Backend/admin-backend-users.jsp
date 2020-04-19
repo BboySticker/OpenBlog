@@ -1,3 +1,4 @@
+<%@ page import="com.openblog.entity.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -151,26 +152,33 @@
 <main role="main" class="container">
     <div class="row">
         <div class="col-md-8 blog-main">
-            <c:forEach items="${articleList}" var="article">
+            <h2 class="text-center">Manage Users</h2>
+            <c:forEach items="${userList}" var="user">
                 <div class="blog-post">
-                    <a id="article-title" href="/OpenBlog/article/${article.articleId}" class="blog-post-title">${article.articleTitle}</a>
-                    <p class="blog-post-meta">${article.articleCreateTime}</p>
+                    <h2 id="user-name" class="blog-post-title">${user.userName}</h2>
+                    <p class="blog-post-meta">${user.userLastLoginTime}</p>
                     <p>${article.articleSummary}......</p>
                     <div>
-                        <a class="btn btn-sm btn-outline-secondary" href="/OpenBlog/article/edit/${article.articleId}">Edit</a>
-                        <a class="btn btn-sm btn-outline-secondary" href="/OpenBlog/article/delete/${article.articleId}">Delete</a>
+                        <a class="btn btn-sm btn-outline-secondary" href="/OpenBlog/user/delete/${user.userId}">Delete</a>
                     </div>
                 </div><!-- /.blog-post -->
             </c:forEach>
 
             <nav class="blog-pagination">
-                <c:forEach var="i" begin="1" end="${pageCount}">
-                    <a class="btn btn-outline-primary ${i == pageIndex ? "disabled" : ""}" href="/OpenBlog/user/${user.userName}/${i}">${i}</a>
-                </c:forEach>
+                <a class="btn btn-outline-primary" href="#">Older</a>
+                <a class="btn btn-outline-secondary disabled" href="#" tabindex="-1" aria-disabled="true">Newer</a>
             </nav>
         </div><!-- /.blog-main -->
 
-        <jsp:include page="../Home/Public/sidebar-1.jsp" /><!-- /.blog-sidebar -->
+        <aside class="col-md-4 blog-sidebar">
+            <div class="p-4 mb-3 bg-light rounded">
+                <h4 class="font-italic">Manage Users</h4>
+                <%
+                    User currentUser = (User) session.getAttribute("user");
+                %>
+                <a href="/OpenBlog/admin/<%=currentUser.getUserName()%>/articles" class="mb-0">Click this link to User Management Portal.</a>
+            </div>
+        </aside><!-- /.blog-sidebar -->
 
     </div><!-- /.row -->
 

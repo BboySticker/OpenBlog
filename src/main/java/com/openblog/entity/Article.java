@@ -71,16 +71,13 @@ public class Article {
     @Column(name = "summary", columnDefinition = "TEXT")
     private String articleSummary;
 
-    @OneToOne
-    @JoinColumn(name = "user")
+    @ManyToOne
     private User user;
 
-    @Column(name = "tags")
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Tag> tagList = new ArrayList<Tag>();
+    @ManyToOne
+    private Tag articleTag;
 
-    @Column(name = "categories")
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Category> categoryList = new ArrayList<Category>();
+    @ManyToOne
+    private Category articleCategory;
 
 }

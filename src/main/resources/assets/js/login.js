@@ -81,7 +81,7 @@ $(function() {
                     if(resp.code == 0) {
                         alert(resp.msg);
                     } else {
-                        window.location.href = "admin";
+                        window.location.href = "index";
                     }
                 },
                 error: function() {

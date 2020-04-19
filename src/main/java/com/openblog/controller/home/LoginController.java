@@ -299,35 +299,16 @@ public class LoginController {
             map.put("code", 0);
             map.put("msg", "User Email Does Not Exists");
         } else {
-            user.setToken("");  // clear the token
-            user.setUserPass(password);  // update the password
+            // clear the token
+            user.setToken("");
+            // update the password
+            user.setUserPass(password);
             userService.updateUser(user);
             map.put("code", 1);
             map.put("msg", "Successfully updated user password");
         }
         String result = new JSONObject(map).toString();
         return result;
-    }
-
-    @GetMapping("/admin")
-    private String admin() {
-        return "Admin/admin";
-    }
-
-    @GetMapping("/admin/login")
-    @ResponseBody
-    private String adminLogin(HttpServletRequest request, HttpServletResponse response) {
-        Map<String, Object> map = new HashMap<String, Object>();
-
-        String result = new JSONObject(map).toString();
-        return result;
-    }
-
-    @GetMapping("/admin/logout")
-    private String adminLogout(HttpSession session) {
-        session.removeAttribute("user");
-        session.invalidate();
-        return "redirect:/index";
     }
 
 }

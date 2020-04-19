@@ -22,7 +22,13 @@ public class UserDaoImpl implements UserDao {
 
     public List<User> listUser() {
         Session currentSession = sessionFactory.getCurrentSession();
-        Query query = currentSession.createQuery("from User");
+        Query query = currentSession.createQuery("FROM User");
+        return query.list();
+    }
+
+    public List<User> listUserNotAdmin() {
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query query = currentSession.createQuery("FROM User WHERE isAdmin=0");
         return query.list();
     }
 
@@ -34,7 +40,7 @@ public class UserDaoImpl implements UserDao {
     public User getUserByName(String username) {
         logger.info("Processing query of [{}] with username: [{}]", "getUserByName", username);
         Session currentSession = sessionFactory.getCurrentSession();
-        Query query = currentSession.createQuery("from User where userName=:username");
+        Query query = currentSession.createQuery("FROM User WHERE userName=:username");
         query.setParameter("username", username);
         List<User> userList = query.list();
         if (userList.size() == 0) {
@@ -46,7 +52,7 @@ public class UserDaoImpl implements UserDao {
     public User getUserByEmail(String email) {
         logger.info("Processing query of [{}] with email: [{}]", "getUserByEmail", email);
         Session currentSession = sessionFactory.getCurrentSession();
-        Query query = currentSession.createQuery("from User where userEmail=:email");
+        Query query = currentSession.createQuery("FROM User WHERE userEmail=:email");
         query.setParameter("email", email);
         List<User> userList = query.list();
         if (userList.size() == 0) {
