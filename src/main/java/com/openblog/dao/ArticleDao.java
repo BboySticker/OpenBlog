@@ -168,6 +168,15 @@ public interface ArticleDao {
     Article getLastUpdateArticle();
 
     /**
+     * List all articles according to tag id
+     *
+     * @param tagId
+     * @param limit
+     * @return
+     */
+    List<Article> listArticleByTagId(Integer tagId, Integer limit);
+
+    /**
      * 获得相关文章
      *
      * @param cateId 分类ID

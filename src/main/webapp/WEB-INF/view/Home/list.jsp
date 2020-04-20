@@ -154,35 +154,70 @@
             <div class="col-md-8 blog-main">
                 <%
                     String displayedTitle = "";
-                    String keyword = response.getHeader("keyword");
-                    if (keyword == null) {
+                    String action = response.getHeader("action");
+                    if (action == null) {
                         displayedTitle = "";
-                    } else if (keyword.equalsIgnoreCase("search")) {
+                    } else if (action.equalsIgnoreCase("search")) {
                         displayedTitle = "Search Results";
-                    } else if (keyword.equalsIgnoreCase("category")) {
-                        displayedTitle = "Category: " + request.getParameter("category");
-                    } else if (keyword.equalsIgnoreCase("tag")) {
-                        displayedTitle = "Tag: " + request.getParameter("tag");
+                    } else if (action.equalsIgnoreCase("category")) {
+                        displayedTitle = "Category: ";
+                    } else if (action.equalsIgnoreCase("tag")) {
+                        displayedTitle = "Tag: ";
+                    } else if (action.equalsIgnoreCase("popular")) {
+                        displayedTitle = "Popular Articles";
                     }
                 %>
-                <h2 class="text-center"><%=displayedTitle%></h2>
+                <h2 class="text-center">
+                    <%=displayedTitle%>
+                    ${category == null ? "" : category.categoryName}
+                    ${tag == null ? "" : tag.tagName}
+                </h2>
 
                 <c:forEach items="${articleList}" var="article">
                     <div class="blog-post">
                         <a class="blog-post-title" href="/OpenBlog/article/${article.articleId}">${article.articleTitle}</a>
-                        <p class="blog-post-meta">${article.articleCreateTime} by <a href="/OpenBlog/user/${article.articleUserId}">${article.user.getUserName()}</a></p>
+                        <p class="blog-post-meta">
+                                ${article.articleCreateTime} by
+                                <a href="/OpenBlog/user/${article.user.userName}">${article.user.userName}</a>
+                                Views: ${article.articleViewCount}
+                        </p>
                         ${article.articleSummary} <!-- Insert article summary here -->
                     </div><!-- /.blog-post -->
                 </c:forEach>
 
                 <nav class="blog-pagination">
                     <c:forEach var="i" begin="1" end="${pageCount}">
-                        <a class="btn btn-outline-primary ${i == pageIndex ? "disabled" : ""}" href="/OpenBlog/article/list/${i}?action=search&keyword=a">${i}</a>
+                        <a class="btn btn-outline-primary ${i == pageIndex ? "disabled" : ""}" href="${href}/${i}${action == "search" ? "?keyword=" : ""}${keyword}">${i}</a>
                     </c:forEach>
                 </nav>
             </div><!-- /.blog-main -->
 
-            <jsp:include page="Public/sidebar-1.jsp" /><!-- /.blog-sidebar -->
+            <aside class="col-md-4 blog-sidebar">
+                <div class="p-4 mb-3 bg-light rounded">
+                    <h4 class="font-italic">
+                        ${action == "search" ? "About" : action == "category" ? category.categoryName : action == "tag" ? tag.tagName : action == "popular" ? "About" : ""}
+                    </h4>
+                    <p class="mb-0">${action == "search" ? "Results displayed based on searching keyword" : action == "category" ? category.categoryDescription : action == "tag" ? tag.tagDescription : action == "popular" ? "Results displayed based on view count" : ""}</p>
+                </div>
+
+                <div class="p-4">
+                    <h4 class="font-italic">Tags</h4>
+                    <ol class="list-unstyled mb-0">
+                        <c:forEach items="${tagList}" var="tag">
+                            <li><a href="/OpenBlog/tag/${tag.tagName}/1">${tag.tagName}</a></li>
+                        </c:forEach>
+                    </ol>
+                </div>
+
+                <div class="p-4">
+                    <h4 class="font-italic">Elsewhere</h4>
+                    <ol class="list-unstyled">
+                        <li><a href="https://github.com/BboySticker/">GitHub</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">Facebook</a></li>
+                    </ol>
+                </div>
+            </aside><!-- /.blog-sidebar -->
         </div><!-- /.row -->
     </main><!-- /.container -->
 

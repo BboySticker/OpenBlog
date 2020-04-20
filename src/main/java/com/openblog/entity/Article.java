@@ -6,9 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @Builder
@@ -24,9 +23,11 @@ public class Article {
     private Integer articleId;
 
     @Column(name = "userId")
+    @NotNull
     private String articleUserId;
 
-    @Column(name = "title")
+    @Column(name = "title", nullable = false)
+    @NotNull
     private String articleTitle;
 
     @Column(name = "viewCount")
@@ -56,19 +57,19 @@ public class Article {
     /**
      *  Article content in html format
      */
-    @Column(name = "content", columnDefinition = "TEXT")
+    @Column(name = "content", columnDefinition = "LONGTEXT")
     private String articleContent;
 
     /**
      *  Article content in markdown format
      */
-    @Column(name = "contentInMd", columnDefinition = "TEXT")
+    @Column(name = "contentInMd", columnDefinition = "LONGTEXT")
     private String articleContentInMd;
 
     /**
      *  Summary is a chunk of article content that in plain text
      */
-    @Column(name = "summary", columnDefinition = "TEXT")
+    @Column(name = "summary", columnDefinition = "LONGTEXT")
     private String articleSummary;
 
     @ManyToOne

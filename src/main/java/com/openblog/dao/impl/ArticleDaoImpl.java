@@ -184,6 +184,17 @@ public class ArticleDaoImpl implements ArticleDao {
     }
 
     @Transactional
+    public List<Article> listArticleByTagId(Integer tagId, Integer limit) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query query = currentSession.createQuery(
+                "FROM Article WHERE articleTag=:tagId and articleStatus=1 " +
+                        "ORDER BY articleCreateTime DESC")
+                .setInteger("tagId", tagId)
+                .setMaxResults(limit);
+        return query.list();
+    }
+
+    @Transactional
     public List<Article> listArticleByCategoryIds(List<Integer> cateIds, Integer limit) {
         return null;
     }

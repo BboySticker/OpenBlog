@@ -35,7 +35,7 @@ public class Category {
     private String categoryIcon;
 
     @Column(name = "articles")
-    @OneToMany(mappedBy = "articleCategory", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "articleCategory", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @ToString.Exclude
     private List<Article> articles = new ArrayList<Article>();
 

@@ -55,26 +55,26 @@ public class BackendController {
             if (articleCount >= pageIndex * 10) {
                 // has enough num of articles to fill current page
                 model.addAttribute("articleList", articleList.subList((pageIndex - 1) * 10, pageIndex * 10));
-                model.addAttribute("pageCount", articleList.size() % 10 == 0 ? articleList.size() / 10 : articleList.size() / 10 + 1);
             } else if (articleCount < (pageIndex - 1) * 10) {
                 // doesn't have this page
                 model.addAttribute("msg", "Page not found");
                 return "Home/error";
             } else {
-                model.addAttribute("articleList", articleList.subList((pageIndex - 1) * 10, articleList.size()));
-                model.addAttribute("pageCount", articleList.size() % 10 == 0 ? articleList.size() / 10 : articleList.size() / 10 + 1);
+                model.addAttribute("articleList", articleList.subList((pageIndex - 1) * 10, articleCount));
             }
+            model.addAttribute("pageCount", articleCount % 10 == 0 ? articleCount / 10 : articleCount / 10 + 1);
             model.addAttribute("pageIndex", pageIndex);
             model.addAttribute("user", user);
             return "Backend/user-backend";
         } else {
             // user is admin
-            List<Article> articleList = articleService.listArticle();
-            List<User> userList = userService.listUserNotAdmin();
-            model.addAttribute("articleList", articleList);
-            model.addAttribute("userList", userList);
             return "redirect:/admin/" + username;
         }
+    }
+
+    @GetMapping("/admin")
+    public String redirect() {
+        return "redirect:/index";
     }
 
     @GetMapping({"/admin/{username}", "/admin/{username}/"})
@@ -83,10 +83,17 @@ public class BackendController {
     }
 
     @GetMapping("/admin/{username}/{action}")
+    public String redirectWithUsernameAndAction(@PathVariable String username,
+                                                @PathVariable String action) {
+        return "redirect:/admin/" + username + "/" + action + "/1";
+    }
+
+    @GetMapping("/admin/{username}/{action}/{pageIndex}")
     public String getAdmin(HttpSession session,
                            Model model,
                            @PathVariable String username,
-                           @PathVariable String action) {
+                           @PathVariable String action,
+                           @PathVariable Integer pageIndex) {
         User currentUser = (User) session.getAttribute("user");
         User user = userService.getUserByName(username);
         // start validations
@@ -104,19 +111,43 @@ public class BackendController {
             return "Home/error";
         } else if (user.getIsAdmin() == 0) {
             // normal user
-            List<Article> articleList = articleService.listArticleByAuthor(user.getUserId());
-            model.addAttribute("user", user);
-            model.addAttribute("articleList", articleList);
             return "redirect:/user/" + username;
         } else {
             // user is admin
             if (action.equalsIgnoreCase("users")) {
+                // admin manage users
                 List<User> userList = userService.listUserNotAdmin();
-                model.addAttribute("userList", userList);
+                int userCount = userList.size();
+                if (userCount >= pageIndex * 10) {
+                    // has enough num of articles to fill current page
+                    model.addAttribute("userList", userList.subList((pageIndex - 1) * 10, pageIndex * 10));
+                } else if (userCount < (pageIndex - 1) * 10) {
+                    // doesn't have this page
+                    model.addAttribute("msg", "Page not found");
+                    return "Home/error";
+                } else {
+                    model.addAttribute("userList", userList.subList((pageIndex - 1) * 10, userCount));
+                }
+                model.addAttribute("pageCount", userCount % 10 == 0 ? userCount / 10 : userCount / 10 + 1);
+                model.addAttribute("pageIndex", pageIndex);
                 return "Backend/admin-backend-users";
             } else if (action.equalsIgnoreCase("articles")) {
+                // admin manage articles
                 List<Article> articleList = articleService.listArticle();
-                model.addAttribute("articleList", articleList);
+                int articleCount = articleList.size();
+                if (articleCount >= pageIndex * 10) {
+                    // has enough num of articles to fill current page
+                    model.addAttribute("articleList", articleList.subList((pageIndex - 1) * 10, pageIndex * 10));
+                } else if (articleCount < (pageIndex - 1) * 10) {
+                    // doesn't have this page
+                    model.addAttribute("msg", "Page not found");
+                    return "Home/error";
+                } else {
+                    model.addAttribute("articleList", articleList.subList((pageIndex - 1) * 10, articleList.size()));
+                }
+                model.addAttribute("pageCount", articleCount % 10 == 0 ? articleCount / 10 : articleCount / 10 + 1);
+                model.addAttribute("pageIndex", pageIndex);
+                model.addAttribute("user", user);
                 return "Backend/admin-backend";
             } else {
                 model.addAttribute("msg", "Page not exist");

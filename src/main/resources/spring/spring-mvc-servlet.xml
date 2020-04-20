@@ -24,4 +24,8 @@
     <mvc:resources mapping="/js/**" location="/resources/assets/js/, classpath:/assets/js/"></mvc:resources>
     <mvc:resources mapping="/img/**" location="/resources/assets/img/, classpath:/assets/img/"></mvc:resources>
 
+    <mvc:interceptors>
+        <bean id="loggerInterceptor" class="com.openblog.interceptor.LoggerInterceptor"/>
+    </mvc:interceptors>
+
 </beans>

@@ -26,7 +26,7 @@ public class Tag {
     private String tagDescription;
 
     @Column(name = "articles")
-    @OneToMany(mappedBy = "articleTag", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "articleTag", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @ToString.Exclude
     private List<Article> articles = new ArrayList<Article>();
 

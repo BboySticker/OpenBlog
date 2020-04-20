@@ -166,8 +166,9 @@
             </c:forEach>
 
             <nav class="blog-pagination">
-                <a class="btn btn-outline-primary" href="#">Older</a>
-                <a class="btn btn-outline-secondary disabled" href="#" tabindex="-1" aria-disabled="true">Newer</a>
+                <c:forEach var="i" begin="1" end="${pageCount}">
+                    <a class="btn btn-outline-primary ${i == pageIndex ? "disabled" : ""}" href="/OpenBlog/admin/${user.userName}/articles/${i}">${i}</a>
+                </c:forEach>
             </nav>
         </div><!-- /.blog-main -->
 

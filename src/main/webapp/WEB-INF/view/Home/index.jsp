@@ -11,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v3.8.6">
-    <title>Blog Template · Bootstrap</title>
+    <title>Home Page</title>
 
     <!-- Bootstrap core CSS -->
     <link href="https://getbootstrap.com//docs/4.4/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -58,14 +58,20 @@
                 <div class="col-md-6">
                     <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                         <div class="col p-4 d-flex flex-column position-static">
-                            <strong class="d-inline-block mb-2 text-primary">World</strong>
+                            <strong class="d-inline-block mb-2 text-primary">${featuredPost.articleCategory.categoryName}</strong>
                             <h3 class="mb-0">${featuredPost.articleTitle}</h3>
                             <div class="mb-1 text-muted">${featuredPost.articleCreateTime}</div>
                             <p class="card-text mb-auto">${featuredPost.articleSummary.length() > 100 ? featuredPost.articleSummary.substring(0,100) : featuredPost.articleSummary}......</p>
                             <a href="/OpenBlog/article/${featuredPost.articleId}" class="stretched-link">Continue reading</a>
                         </div>
                         <div class="col-auto d-none d-lg-block">
-                            <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+                            <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail">
+                                <title>Placeholder</title>
+                                <rect width="100%" height="100%" fill="#55595c"/>
+                                <text x="50%" y="50%" fill="#eceeef" dy=".3em">
+
+                                </text>
+                            </svg>
                         </div>
                     </div>
                 </div>
@@ -89,7 +95,30 @@
                 </c:forEach>
             </div><!-- /.blog-main -->
 
-            <jsp:include page="Public/sidebar-1.jsp" /><!-- /.blog-sidebar -->
+            <aside class="col-md-4 blog-sidebar">
+                <div class="p-4 mb-3 bg-light rounded">
+                    <h4 class="font-italic">About</h4>
+                    <p class="mb-0">Here are three newly added articles</p>
+                </div>
+
+                <div class="p-4">
+                    <h4 class="font-italic">Tags</h4>
+                    <ol class="list-unstyled mb-0">
+                        <c:forEach items="${tagList}" var="tag">
+                            <li><a href="/OpenBlog/tag/${tag.tagName}/1">${tag.tagName}</a></li>
+                        </c:forEach>
+                    </ol>
+                </div>
+
+                <div class="p-4">
+                    <h4 class="font-italic">Elsewhere</h4>
+                    <ol class="list-unstyled">
+                        <li><a href="https://github.com/BboySticker/">GitHub</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">Facebook</a></li>
+                    </ol>
+                </div>
+            </aside><!-- /.blog-sidebar -->
 
         </div><!-- /.row -->
 

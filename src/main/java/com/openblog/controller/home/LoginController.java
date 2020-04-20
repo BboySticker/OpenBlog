@@ -302,7 +302,7 @@ public class LoginController {
             // clear the token
             user.setToken("");
             // update the password
-            user.setUserPass(password);
+            user.setUserPass(passwordEncoder.encode(password));
             userService.updateUser(user);
             map.put("code", 1);
             map.put("msg", "Successfully updated user password");

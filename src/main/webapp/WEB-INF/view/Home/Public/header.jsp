@@ -15,7 +15,6 @@
                 <div class="col-6 text-right">
                     <form action="/OpenBlog/article/list/1" method="get">
                         <div class="input-group input-group-sm form-inline">
-                            <input type="hidden" name="action" value="search">
                             <input id="search-input" name="keyword" type="search" class="form-control form-control-sm" placeholder="Search..." />
                             <div class="input-group-append">
                                 <button type="submit" class="btn btn-outline-secondary" type="button" id="button-addon2">Search</button>
@@ -60,8 +59,7 @@
 </header>
 <div class="nav-scroller py-1 mb-2">
     <nav class="nav d-flex justify-content-between">
-        <a class="p-2 text-muted" href="#">Popular</a>
-        <a class="p-2 text-muted" href="#">Favourite</a>
+        <a class="p-2 text-muted" href="/OpenBlog/popular/1">Popular</a>
         <a class="p-2 text-muted" href="/OpenBlog/category/technology/1">Technology</a>
         <a class="p-2 text-muted" href="/OpenBlog/category/design/1">Design</a>
         <a class="p-2 text-muted" href="/OpenBlog/category/culture/1">Culture</a>
