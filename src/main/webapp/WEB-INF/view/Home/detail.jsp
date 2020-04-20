@@ -153,7 +153,10 @@
             <div class="col-md-8 blog-main">
                 <div class="blog-post">
                     <h2 class="blog-post-title">${article.articleTitle}</h2>
-                    <p class="blog-post-meta">${article.articleCreateTime} by <a href="/OpenBlog/user/${article.user.userName}">${article.user.userName}</a></p>
+                    <p class="blog-post-meta">${article.articleCreateTime} by
+                        <a href="/OpenBlog/user/${article.user.userName}">${article.user.userName}</a>
+                        Views: ${article.articleViewCount}
+                    </p>
                     ${article.articleContent} <!-- Insert Rich HTML here -->
                 </div><!-- /.blog-post -->
             </div><!-- /.blog-main -->

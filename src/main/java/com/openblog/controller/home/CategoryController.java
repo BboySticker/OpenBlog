@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,13 +57,20 @@ public class CategoryController {
         }
     }
 
+    @GetMapping("/category/{categoryName}")
+    public String redirectListByCategory(@PathVariable String categoryName) {
+        return "redirect:/category/" + categoryName + "/1";
+    }
+
     @GetMapping("/category/{categoryName}/{pageIndex}")
     public String listByCategory(HttpServletRequest request,
                                  HttpServletResponse response,
                                  Model model,
                                  @PathVariable String categoryName,
                                  @PathVariable Integer pageIndex) {
-        response.setHeader("keyword", "category");
+        response.setHeader("action", "category");
+        model.addAttribute("action", "category");
+        model.addAttribute("href", "/OpenBlog/category/" + categoryName);
 
         // category info
         Category category = categoryService.getCategoryByName(categoryName);

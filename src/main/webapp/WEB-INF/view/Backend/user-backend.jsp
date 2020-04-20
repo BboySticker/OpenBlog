@@ -151,6 +151,7 @@
 <main role="main" class="container">
     <div class="row">
         <div class="col-md-8 blog-main">
+            <h2 class="text-center">${articleList == null || articleList.size() == 0 ? "<br><br><br><br><br><br><br>You haven\'t posted any articles<br><br><br><br><br><br><br>" : ""}</h2>
             <c:forEach items="${articleList}" var="article">
                 <div class="blog-post">
                     <a id="article-title" href="/OpenBlog/article/${article.articleId}" class="blog-post-title">${article.articleTitle}</a>
@@ -170,7 +171,30 @@
             </nav>
         </div><!-- /.blog-main -->
 
-        <jsp:include page="../Home/Public/sidebar-1.jsp" /><!-- /.blog-sidebar -->
+        <aside class="col-md-4 blog-sidebar">
+            <div class="p-4 mb-3 bg-light rounded">
+                <h4 class="font-italic">About</h4>
+                <p class="mb-0">You can manage your articles here. </p>
+            </div>
+
+            <div class="p-4">
+                <h4 class="font-italic">Tags</h4>
+                <ol class="list-unstyled mb-0">
+                    <c:forEach items="${tagList}" var="tag">
+                        <li><a href="/OpenBlog/tag/${tag.tagName}/1">${tag.tagName}</a></li>
+                    </c:forEach>
+                </ol>
+            </div>
+
+            <div class="p-4">
+                <h4 class="font-italic">Elsewhere</h4>
+                <ol class="list-unstyled">
+                    <li><a href="https://github.com/BboySticker/">GitHub</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Facebook</a></li>
+                </ol>
+            </div>
+        </aside><!-- /.blog-sidebar -->
 
     </div><!-- /.row -->
 

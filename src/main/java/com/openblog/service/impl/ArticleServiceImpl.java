@@ -99,6 +99,10 @@ public class ArticleServiceImpl implements ArticleService {
         return articleDao.getLastUpdateArticle();
     }
 
+    public List<Article> listArticleByTagId(Integer tagId, Integer limit) {
+        return articleDao.listArticleByTagId(tagId, limit);
+    }
+
     public List<Article> listArticleByCategoryId(Integer cateId, Integer limit) {
         return articleDao.listArticleByCategoryId(cateId, limit);
     }

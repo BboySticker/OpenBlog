@@ -89,7 +89,6 @@ public class EditorController {
 
         articleService.insertArticle(article);
         session.setAttribute("article", article);
-        model.addAttribute("article", article);
         return "redirect:/editor/drafts/preview";
     }
 
@@ -144,7 +143,7 @@ public class EditorController {
         // parse category info and update article category attribute
         String categoryIdStr = request.getParameter("category");
         Integer categoryId = 0;
-        if (categoryIdStr != null) {
+        if (categoryIdStr != null && categoryIdStr != "") {
             categoryId = Integer.parseInt(categoryIdStr);
         }
         Category category = categoryService.getCategoryById(categoryId);
@@ -159,13 +158,21 @@ public class EditorController {
             if (tag == null) {
                 tag = new Tag();
                 tag.setTagName(tagName);
-                tag.getArticles().add(article);
                 tag.setTagDescription("");
+
+                article.setArticleTag(tag);
+
+                tag.getArticles().add(article);
                 tagService.insertTag(tag);
+                model.addAttribute("tag", tag);
+            } else {
+                article.setArticleTag(tag);
+
+                tag.getArticles().add(article);
+                tagService.insertTag(tag);
+                model.addAttribute("tag", tag);
             }
-            article.setArticleTag(tag);
         }
-        articleService.updateArticle(article);
         model.addAttribute("article", article);
         return "redirect:/article/" + article.getArticleId();
     }

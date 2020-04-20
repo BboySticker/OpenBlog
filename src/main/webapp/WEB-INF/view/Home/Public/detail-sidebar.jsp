@@ -7,7 +7,11 @@
     <div class="p-4">
         <h4 class="font-italic">Tag</h4>
         <ol class="list-unstyled mb-0">
-            <li><a href="#">${article.articleTag == null ? "No Tag" : article.articleTag.tagDescription}</a></li>
+            <li>
+                <a href="${article.articleTag == null ? "#" : "/OpenBlog/tag/"}${article.articleTag == null ? "" : article.articleTag.tagName}${article.articleTag == null ? "" : "/1"}">
+                    ${article.articleTag == null ? "No Tag" : article.articleTag.tagName}
+                </a>
+            </li>
         </ol>
     </div>
 

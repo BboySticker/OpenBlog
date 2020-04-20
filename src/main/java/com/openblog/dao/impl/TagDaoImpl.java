@@ -33,15 +33,23 @@ public class TagDaoImpl implements TagDao {
     }
 
     public Tag getTagById(Integer id) {
-        return null;
+        Session currentSession = sessionFactory.getCurrentSession();
+        return currentSession.get(Tag.class, id);
     }
 
     public Tag insertTag(Tag tag) {
-        return null;
+        Session currentSession = sessionFactory.getCurrentSession();
+        if (tag != null) {
+            currentSession.saveOrUpdate(tag);
+        }
+        return tag;
     }
 
     public void updateTag(Tag tag) {
-
+        Session currentSession = sessionFactory.getCurrentSession();
+        if (tag != null) {
+            currentSession.saveOrUpdate(tag);
+        }
     }
 
     public void deleteTag(Integer id) {
@@ -49,7 +57,11 @@ public class TagDaoImpl implements TagDao {
     }
 
     public Tag getTagByName(String name) {
-        return null;
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query query = currentSession.createQuery(
+                "FROM Tag WHERE tagName=:name")
+                .setString("name", name);
+        return (Tag) query.uniqueResult();
     }
 
     public List<Tag> listTagByArticleId(Integer articleId) {

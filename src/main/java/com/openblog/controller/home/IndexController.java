@@ -75,19 +75,23 @@ public class IndexController {
 
     @RequestMapping(value = {"/", "/index"})
     public String index(Model model) {
+        List<Article> top3 = articleService.listArticleByViewCount(3);
+
         // generate the jumbotron
-        Article jumbotron = articleService.listArticleByViewCount(1).get(0);
+        Article jumbotron = top3.get(0);
         model.addAttribute("jumbotron", jumbotron);
 
         // generate the featured posts, num = 2
-        List<Article> featuredPosts = articleService.listArticleByCommentCount(2);
+        List<Article> featuredPosts = top3.subList(1,3);
         model.addAttribute("featuredPosts", featuredPosts);
 
         // generate the recent articles, num = 3
         List<Article> whatsNewToday = articleService.listRecentArticle(3);
         model.addAttribute("whatsNewToday", whatsNewToday);
 
-        model.addAttribute("tagList", tagService.listTag());
+        // add tag list
+        List<Tag> tagList = tagService.listTag();
+        model.addAttribute("tagList", tagList);
 
         return "Home/index";
     }

@@ -60,8 +60,7 @@
 </header>
 <div class="nav-scroller py-1 mb-2">
     <nav class="nav d-flex justify-content-between">
-        <a class="p-2 text-muted" href="#">Popular</a>
-        <a class="p-2 text-muted" href="#">Favourite</a>
+        <a class="p-2 text-muted" href="/OpenBlog/popular/1">Popular</a>
         <a class="p-2 text-muted" href="/OpenBlog/category/technology/1">Technology</a>
         <a class="p-2 text-muted" href="/OpenBlog/category/design/1">Design</a>
         <a class="p-2 text-muted" href="/OpenBlog/category/culture/1">Culture</a>
