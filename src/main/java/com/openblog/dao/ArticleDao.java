@@ -3,7 +3,6 @@ package com.openblog.dao;
 import com.openblog.entity.Article;
 
 import java.util.List;
-import java.util.Map;
 
 public interface ArticleDao {
     /**
@@ -86,16 +85,6 @@ public interface ArticleDao {
      * @param article Article
      */
     void deleteArticle(Article article);
-
-    /**
-     * Pagination
-     *
-     * @param pageIndex 第几页开始
-     * @param pageSize  一页显示多少
-     * @param criteria  查询条件
-     * @return 文章列表
-     */
-    List<Article> pageArticle(Integer pageIndex, Integer pageSize, Map<String, Object> criteria);
 
     /**
      * Retrieve article by status and id.

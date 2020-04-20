@@ -7,6 +7,7 @@ import com.openblog.service.ArticleService;
 import com.openblog.service.TagService;
 import com.openblog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +35,9 @@ public class IndexController {
     @Autowired
     private TagService tagService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @PostConstruct
     public void init() {
         if (articleService.listArticle().size() < 3) {
@@ -42,7 +46,7 @@ public class IndexController {
                 User newUser = new User();
                 newUser.setUserId(UUID.randomUUID().toString());
                 newUser.setUserName("user01");
-                newUser.setUserPass("user01");
+                newUser.setUserPass(passwordEncoder.encode("user01"));
                 newUser.setUserEmail("user01@gmail.com");
                 newUser.setUserUrl("user/user01");
                 newUser.setUserRegisterTime(new Date());
@@ -92,6 +96,10 @@ public class IndexController {
         // add tag list
         List<Tag> tagList = tagService.listTag();
         model.addAttribute("tagList", tagList);
+
+        // get total visit num
+        int views = articleService.countArticleView();
+        model.addAttribute("views", views);
 
         return "Home/index";
     }

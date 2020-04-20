@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {
@@ -57,10 +56,6 @@ public class ArticleServiceImpl implements ArticleService {
 
     public void deleteArticle(Article article) {
         articleDao.deleteArticle(article);
-    }
-
-    public List<Article> pageArticle(Integer pageIndex, Integer pageSize, Map<String, Object> criteria) {
-        return articleDao.pageArticle(pageIndex, pageSize, criteria);
     }
 
     public Article getArticleByStatusAndId(Integer status, Integer id) {

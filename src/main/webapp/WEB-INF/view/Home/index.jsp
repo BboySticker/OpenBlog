@@ -99,6 +99,7 @@
                 <div class="p-4 mb-3 bg-light rounded">
                     <h4 class="font-italic">About</h4>
                     <p class="mb-0">Here are three newly added articles</p>
+                    <p class="mb-0">Total views: ${views}</p>
                 </div>
 
                 <div class="p-4">
