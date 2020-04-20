@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public class ArticleDaoImpl implements ArticleDao {
@@ -58,7 +57,11 @@ public class ArticleDaoImpl implements ArticleDao {
 
     @Transactional
     public Integer countArticle(Integer status) {
-        return null;
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query query = currentSession.createQuery(
+                "SELECT count(*) FROM Article WHERE articleStatus=:status")
+                .setInteger("status", status);
+        return Math.toIntExact((Long) query.uniqueResult());
     }
 
     @Transactional
@@ -68,7 +71,10 @@ public class ArticleDaoImpl implements ArticleDao {
 
     @Transactional
     public Integer countArticleView() {
-        return null;
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query query = currentSession.createQuery(
+                "SELECT SUM(articleViewCount) FROM Article WHERE articleStatus=1");
+        return Math.toIntExact((Long) query.uniqueResult());
     }
 
     @Transactional
@@ -77,7 +83,7 @@ public class ArticleDaoImpl implements ArticleDao {
         Query query = currentSession.createQuery(
                 "SELECT count(*) FROM Article WHERE articleCategory=:cateId")
                 .setInteger("cateId", categoryId);
-        return Integer.valueOf(Math.toIntExact((Long) query.uniqueResult()));
+        return Math.toIntExact((Long) query.uniqueResult());
     }
 
     @Transactional
@@ -114,23 +120,6 @@ public class ArticleDaoImpl implements ArticleDao {
     public void deleteArticle(Article article) {
         Session currentSession = sessionFactory.getCurrentSession();
         currentSession.delete(article);
-    }
-
-    @Transactional
-    public List<Article> pageArticle(Integer pageIndex, Integer pageSize, Map<String, Object> criteria) {
-        Session currentSession = sessionFactory.getCurrentSession();
-        String hql = "FROM Article WHERE articleStatus=1";
-        if (criteria.containsKey("category")) {
-            hql = hql + " AND articleCategory=" + criteria.get("categoryId");
-        } else if (criteria.containsKey("tag")) {
-            hql = hql + " AND articleTag=" + criteria.get("tagId");
-        } else if (criteria.containsKey("user")) {
-            hql = hql + " AND articleUserId=" + criteria.get("userId");
-        }
-        Query query = currentSession.createQuery(hql)
-                .setFirstResult(pageIndex)
-                .setMaxResults(pageSize);
-        return query.list();
     }
 
     @Transactional
