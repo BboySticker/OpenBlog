@@ -125,11 +125,6 @@ public class EditorController {
         return "redirect:/article/" + article.getArticleId();
     }
 
-    @GetMapping("/editor/drafts")
-    public String viewDrafts(HttpServletRequest request, Model model) {
-        return "Editor/drafts";
-    }
-
     @GetMapping("/editor/drafts/preview")
     public String getPreviewArticle() {
         return "Editor/preview";
