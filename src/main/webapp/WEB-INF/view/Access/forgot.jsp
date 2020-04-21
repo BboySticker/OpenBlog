@@ -21,7 +21,7 @@
                                 <form id="reset-form" method="POST" class="my-login-validation" novalidate="">
                                     <div class="form-group">
                                         <label for="email">E-Mail Address</label>
-                                        <input id="email" type="email" class="form-control" name="email" value="" required autofocus>
+                                        <input id="email" type="email" class="form-control" name="email" required autofocus>
                                         <div class="invalid-feedback">
                                             Email is invalid
                                         </div>
@@ -29,7 +29,7 @@
 
                                     <div class="form-group">
                                         <label for="token">Reset Token</label>
-                                        <input id="token" type="text" class="form-control" name="token" value="" required data-eye>
+                                        <input id="token" type="text" class="form-control" name="token" required data-eye>
                                         <div class="form-text text-muted">
                                             By clicking "Get Token" we will send a password reset token to you
                                         </div>

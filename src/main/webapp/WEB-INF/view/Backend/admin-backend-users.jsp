@@ -155,9 +155,9 @@
             <h2 class="text-center">Manage Users</h2>
             <c:forEach items="${userList}" var="user">
                 <div class="blog-post">
-                    <h2 id="user-name" class="blog-post-title">${user.userName}</h2>
-                    <p class="blog-post-meta">${user.userLastLoginTime}</p>
-                    <p>${article.articleSummary}......</p>
+                    <a href="/OpenBlog/${user.userUrl}/1"><h2 id="user-name" class="blog-post-title">${user.userName}</h2></a>
+                    <p class="blog-post-meta">Last login time: ${user.userLastLoginTime}</p>
+                    <p></p>
                     <div>
                         <a class="btn btn-sm btn-outline-secondary" href="/OpenBlog/user/delete/${user.userId}">Delete</a>
                     </div>
@@ -174,10 +174,7 @@
         <aside class="col-md-4 blog-sidebar">
             <div class="p-4 mb-3 bg-light rounded">
                 <h4 class="font-italic">Manage Users</h4>
-                <%
-                    User currentUser = (User) session.getAttribute("user");
-                %>
-                <a href="/OpenBlog/admin/<%=currentUser.getUserName()%>/articles" class="mb-0">Click this link to User Management Portal.</a>
+                <a href="/OpenBlog/admin/${user.userName}/articles" class="mb-0">Click this link to User Management Portal.</a>
             </div>
         </aside><!-- /.blog-sidebar -->
 

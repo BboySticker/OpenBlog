@@ -195,9 +195,17 @@
             <aside class="col-md-4 blog-sidebar">
                 <div class="p-4 mb-3 bg-light rounded">
                     <h4 class="font-italic">
-                        ${action == "search" ? "About" : action == "category" ? category.categoryName : action == "tag" ? tag.tagName : action == "popular" ? "About" : ""}
+                        <c:if test="${action == 'search'}">About</c:if>
+                        <c:if test="${action == 'category'}">${category.categoryName}</c:if>
+                        <c:if test="${action == 'tag'}">${tag.tagName}</c:if>
+                        <c:if test="${action == 'popular'}">About</c:if>
                     </h4>
-                    <p class="mb-0">${action == "search" ? "Results displayed based on searching keyword" : action == "category" ? category.categoryDescription : action == "tag" ? tag.tagDescription : action == "popular" ? "Results displayed based on view count" : ""}</p>
+                    <p class="mb-0">
+                        <c:if test="${action == 'search'}">Results displayed based on searching keyword</c:if>
+                        <c:if test="${action == 'category'}">${category.categoryDescription}</c:if>
+                        <c:if test="${action == 'tag'}">${tag.tagDescription}</c:if>
+                        <c:if test="${action == 'popular'}">Results displayed based on view count</c:if>
+                    </p>
                 </div>
 
                 <div class="p-4">
