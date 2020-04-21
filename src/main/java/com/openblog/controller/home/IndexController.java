@@ -104,9 +104,4 @@ public class IndexController {
         return "Home/index";
     }
 
-    @GetMapping("/body")
-    public String body(Model model) {
-        return "Home/Public/body";
-    }
-
 }

@@ -221,7 +221,7 @@
                     <h4 class="font-italic">Elsewhere</h4>
                     <ol class="list-unstyled">
                         <li><a href="https://github.com/BboySticker/">GitHub</a></li>
-                        <li><a href="#">Twitter</a></li>
+                        <li><a href="https://www.linkedin.com/in/xinyu-zhang-31a685170/">LinkedIn</a></li>
                         <li><a href="#">Facebook</a></li>
                     </ol>
                 </div>
