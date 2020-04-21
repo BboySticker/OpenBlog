@@ -2,6 +2,7 @@ package com.openblog.controller.home;
 
 import com.openblog.entity.Article;
 import com.openblog.service.ArticleService;
+import com.openblog.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,9 @@ public class PopularController {
     @Autowired
     private ArticleService articleService;
 
+    @Autowired
+    private TagService tagService;
+
     @GetMapping("/popular/{pageIndex}")
     public String listPopular(HttpServletResponse response,
                               Model model,
@@ -28,6 +32,8 @@ public class PopularController {
         List<Article> allArticles = articleService.listArticle();
         int articleCount = allArticles.size();
         List<Article> articleList = articleService.listArticleByViewCount(pageIndex * 10);
+
+        // start doing pagination
         if (articleCount >= pageIndex * 10) {
             // has enough num of articles to fill current page
             model.addAttribute("articleList", articleList.subList((pageIndex - 1) * 10, pageIndex * 10));
@@ -40,6 +46,10 @@ public class PopularController {
         }
         model.addAttribute("pageCount", articleCount % 10 == 0 ? articleCount / 10 : articleCount / 10 + 1);
         model.addAttribute("pageIndex", pageIndex);
+
+        // add tag list
+        model.addAttribute("tagList", tagService.listTag());
+
         return "Home/list";
     }
 

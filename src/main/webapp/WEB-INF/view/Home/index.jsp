@@ -89,7 +89,7 @@
                 <c:forEach items="${whatsNewToday}" var="newArticle">
                     <div class="blog-post">
                         <h2 class="blog-post-title">${newArticle.articleTitle}</h2>
-                        <p class="blog-post-meta">${newArticle.articleCreateTime} by <a href="/OpenBlog/user/${newArticle.articleUserId}">${newArticle.user.getUserName()}</a></p>
+                        <p class="blog-post-meta">${newArticle.articleCreateTime} by <a href="/OpenBlog/user/${newArticle.user.userName}">${newArticle.user.userName}</a></p>
                         ${newArticle.articleContent} <!-- Insert Rich HTML here -->
                     </div><!-- /.blog-post -->
                 </c:forEach>

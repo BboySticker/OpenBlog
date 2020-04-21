@@ -3,6 +3,7 @@ package com.openblog.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.Date;
 
 @Data
@@ -20,10 +21,11 @@ public class User {
     @Column(name = "userName")
     private String userName;
 
-    @Column(name = "userPassword")
+    @Column(name = "userPassword", length = 40)
     private String userPass;
 
     @Column(name = "userEmail")
+    @Email(message = "Please provide valid email address")
     private String userEmail;
 
     @Column(name = "userUrl")

@@ -3,17 +3,20 @@ package com.openblog.controller.home;
 import com.openblog.entity.User;
 import com.openblog.service.UserService;
 import com.openblog.util.EmailUtil;
+import com.openblog.validation.PasswordValidator;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,6 +38,31 @@ public class LoginController {
     private PasswordEncoder passwordEncoder;
 
     private Logger logger = LoggerFactory.getLogger(LoginController.class);
+
+    private PasswordValidator passwordValidator = new PasswordValidator();
+
+    /**
+     * Register admin user
+     */
+    @PostConstruct
+    public void init() {
+        if (userService.getUserByName("admin") == null) {
+            User admin = new User();
+            admin.setUserId(UUID.randomUUID().toString());
+            admin.setUserName("admin");
+            admin.setUserPass(passwordEncoder.encode("admin"));
+            admin.setUserEmail("admin@openblog.com");
+            admin.setUserUrl("admin/admin");
+            admin.setUserAvatar(null);
+            admin.setUserLastLoginIp(null);
+            admin.setUserRegisterTime(new Date());
+            admin.setUserLastLoginTime(new Date());
+            admin.setUserStatus(1);
+            admin.setToken(null);
+            admin.setIsAdmin(1);
+            userService.addUser(admin);    
+        }
+    }
 
     /**
      * If user is already logged in,
@@ -98,24 +126,35 @@ public class LoginController {
      * Verify whether user input is already been used before
      *
      * @param request
-     * @param response
      * @return String that in JSON format, include status code and message
      */
     @PostMapping("/registerVerify")
     @ResponseBody
-    private String registerVerify(HttpServletRequest request, HttpServletResponse response) {
-        Map<String, Object> map = new HashMap<String, Object>();
+    private String registerVerify(HttpServletRequest request) {
+        Map<String, Object> map = new HashMap<>();
 
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        if (userService.getUserByEmail(email) != null) {
-            map.put("code", 0);
-            map.put("msg", "Email has already been used!");
-        } else if (userService.getUserByName(name) != null) {
+        if (userService.getUserByName(name) != null) {
+            // username validation
             map.put("code", 0);
             map.put("msg", "Username has already been used!");
+        } else if (userService.getUserByEmail(email) != null) {
+            // user email validation
+            map.put("code", 0);
+            map.put("msg", "Email has already been used!");
+        } else if (password.length() < 8 || !passwordValidator.isValid(password)) {
+            // password validation
+            logger.warn("Password too weak");
+            map.put("code", 0);
+            map.put("msg", "Password too weak! \n" +
+                    "Be between 8 and 40 characters long.\n" +
+                    "Contain at least one digit.\n" +
+                    "Contain at least one lower case character.\n" +
+                    "Contain at least one upper case character.\n" +
+                    "Contain at least on special character from [ @ # $ % ! . ].");
         } else {
             map.put("code", 1);
             map.put("msg", "Successfully registered!");
@@ -129,8 +168,8 @@ public class LoginController {
             user.setUserLastLoginIp(getIpAddr(request));
             user.setUserRegisterTime(new Date());
             user.setUserLastLoginTime(new Date());
-            user.setUserStatus(1);  // 0 - abnormal, 1 - normal
-            user.setIsAdmin(0);  // 0 - not admin, 1 - admin
+            user.setUserStatus(1);
+            user.setIsAdmin(0);
 
             userService.addUser(user);
             request.getSession().setAttribute("user", user);
@@ -152,7 +191,7 @@ public class LoginController {
     @PostMapping("/loginVerify")
     @ResponseBody
     private String loginVerify(HttpServletRequest request, HttpServletResponse response) {
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
 
         String email = request.getParameter("email");
         String password = request.getParameter("password");
@@ -202,7 +241,7 @@ public class LoginController {
     @PostMapping("/getResetToken")
     @ResponseBody
     private String getToken(HttpServletRequest request) {
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         String email = request.getParameter("email");
         User user = userService.getUserByEmail(email);
         if (user == null) {
@@ -234,11 +273,13 @@ public class LoginController {
      * @return reset page or redirect to forgot page
      */
     @GetMapping("/reset")
-    private String reset(HttpSession session) {
+    private String reset(HttpSession session, Model model) {
         Object code = session.getAttribute("resetVerified");
         if (code == null || (Integer) code != 1) {
             return "redirect:/forgot";
         }
+        model.addAttribute("email", session.getAttribute("email"));
+        session.removeAttribute("email");
         return "Access/reset";
     }
 
@@ -252,7 +293,7 @@ public class LoginController {
     @PostMapping("/resetVerify")
     @ResponseBody
     private String resetVerify(HttpServletRequest request) {
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
 
         String email = request.getParameter("email");
         String token = request.getParameter("token");
@@ -276,6 +317,9 @@ public class LoginController {
             // add verification code into session,
             // prevent user access the reset page directly from the url
             request.getSession().setAttribute("resetVerified", 1);
+
+            String userEmail = request.getParameter("email");
+            request.getSession().setAttribute("email", userEmail);
         }
         String result = new JSONObject(map).toString();
         return result;
@@ -290,14 +334,29 @@ public class LoginController {
     @PostMapping("/resetPasswordVerify")
     @ResponseBody
     private String resetPasswordVerify(HttpServletRequest request) {
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        String passwordConfirmed = request.getParameter("password-confirm");
+
         User user = userService.getUserByEmail(email);
         if (user == null) {
             // user not exist
             map.put("code", 0);
             map.put("msg", "User Email Does Not Exists");
+        } else if (!password.equals(passwordConfirmed)) {
+            // passwords not match
+            map.put("code", 0);
+            map.put("msg", "Passwords Do Not Match");
+        } else if (password.length() < 8 || !passwordValidator.isValid(password)) {
+            // password validation
+            map.put("code", 0);
+            map.put("msg", "Password too weak! \n" +
+                    "Be between 8 and 40 characters long.\n" +
+                    "Contain at least one digit.\n" +
+                    "Contain at least one lower case character.\n" +
+                    "Contain at least one upper case character.\n" +
+                    "Contain at least on special character from [ @ # $ % ! . ].");
         } else {
             // clear the token
             user.setToken("");
@@ -310,5 +369,4 @@ public class LoginController {
         String result = new JSONObject(map).toString();
         return result;
     }
-
 }

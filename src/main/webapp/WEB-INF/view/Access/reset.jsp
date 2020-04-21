@@ -21,10 +21,10 @@
                         <form id="password-reset-form" name="password-reset-form" method="POST" class="my-login-validation" novalidate="">
                             <div class="form-group">
                                 <label for="email">E-Mail Address</label>
-                                <input id="email" type="email" class="form-control" name="email" required>
-                                <div class="invalid-feedback">
-                                    Your email is invalid
-                                </div>
+                                <input id="email" type="email" class="form-control" name="email" value="${email}" readonly>
+<%--                                <div class="invalid-feedback">--%>
+<%--                                    Your email is invalid--%>
+<%--                                </div>--%>
                             </div>
 
                             <div class="form-group">

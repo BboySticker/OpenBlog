@@ -156,12 +156,14 @@
             <c:forEach items="${articleList}" var="article">
                 <div class="blog-post">
                     <a id="article-title" href="/OpenBlog/article/${article.articleId}" class="blog-post-title">${article.articleTitle}</a>
-                    <p class="blog-post-meta">${article.articleCreateTime} by <a href="/OpenBlog/user/${article.articleUserId}">${article.user.getUserName()}</a></p>
+                    <p class="blog-post-meta">${article.articleCreateTime} by <a href="/OpenBlog/user/${article.user.userName}">${article.user.userName}</a></p>
                     <p>${article.articleSummary}......</p>
-                    <div>
-                        <a class="btn btn-sm btn-outline-secondary" href="/OpenBlog/article/edit/${article.articleId}">Edit</a>
-                        <a class="btn btn-sm btn-outline-secondary" href="/OpenBlog/article/delete/${article.articleId}">Delete</a>
-                    </div>
+                    <c:if test="${user.userEmail == currentUser.userEmail}">
+                        <div>
+                            <a class="btn btn-sm btn-outline-secondary" href="/OpenBlog/article/edit/${article.articleId}">Edit</a>
+                            <a class="btn btn-sm btn-outline-secondary" href="/OpenBlog/article/delete/${article.articleId}">Delete</a>
+                        </div>
+                    </c:if>
                 </div><!-- /.blog-post -->
             </c:forEach>
 
@@ -174,11 +176,14 @@
 
         <aside class="col-md-4 blog-sidebar">
             <div class="p-4 mb-3 bg-light rounded">
-                <h4 class="font-italic">Manage Users</h4>
-                <%
-                    User currentUser = (User) session.getAttribute("user");
-                %>
-                <a href="/OpenBlog/admin/<%=currentUser.getUserName()%>/users" class="mb-0">Click this link to User Management Portal.</a>
+                <c:if test="${user.userEmail == currentUser.userEmail}">
+                    <h4 class="font-italic">Manage Users</h4>
+                    <a href="/OpenBlog/admin/${user.userName}/users" class="mb-0">Click this link to User Management Portal.</a>
+                </c:if>
+                <c:if test="${user.userEmail != currentUser.userEmail}">
+                    <h4 class="font-italic">User Profile</h4>
+                    <p class="mb-0">Here is a list articles written by ${user.userName}.</p>
+                </c:if>
             </div>
         </aside><!-- /.blog-sidebar -->
 
