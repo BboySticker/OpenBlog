@@ -151,9 +151,9 @@ public interface ArticleService {
     void updateCommentCount(Integer articleId);
 
     /**
-     * 获得最后更新记录
+     * Get last update article.
      *
-     * @return 文章
+     * @return Article
      */
     Article getLastUpdateArticle();
 
@@ -166,36 +166,35 @@ public interface ArticleService {
     List<Article> listArticleByTagId(Integer tagId, Integer limit);
 
     /**
-     * 获得相关文章
+     * Get articles based on category and limit
      *
-     * @param cateId 分类ID
-     * @param limit  查询数量
-     * @return 列表
+     * @param cateId
+     * @param limit
+     * @return List<Article>
      */
     List<Article> listArticleByCategoryId(Integer cateId, Integer limit);
 
     /**
-     * 获得相关文章
+     * Get articles based on a list of category id
      *
-     * @param cateIds 分类ID集合
-     * @param limit   数量
-     * @return 列表
+     * @param cateIds
+     * @param limit
+     * @return List<Article>
      */
     List<Article> listArticleByCategoryIds(List<Integer> cateIds, Integer limit);
 
-
     /**
-     * 根据文章ID获得分类ID列表
+     * Get category id based on article id
      *
-     * @param articleId 文章Id
-     * @return 列表
+     * @param articleId
+     * @return List<Integer>
      */
     List<Integer> listCategoryIdByArticleId(Integer articleId);
 
     /**
-     * 获得所有的文章
+     * Get all articles
      *
-     * @return 列表
+     * @return List<Article>
      */
     List<Article> listAllNotWithContent();
 
